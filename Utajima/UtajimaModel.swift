@@ -8,22 +8,31 @@
 
 import UIKit
 import MediaPlayer
+import AVFoundation
 
 class UtajimaModel: NSObject {
+    var songsQuery : MPMediaQuery! = nil
     
-    var musicList = []
-
     override init(){
         println("hi utajmamodel")
         super.init()
         self.listupAllMusics()
+        
+        self.playAsong()
     }
     
     func listupAllMusics(){
-        let sq = MPMediaQuery.songsQuery()
-        var songs = sq.items
-        for item in songs {
+        self.songsQuery = MPMediaQuery.songsQuery()
+        for item in self.songsQuery.items {
             println(item.title)
+            //println(item.albumTitle)
         }
+    }
+    
+    func playAsong(){
+        println("play!")
+        var myPlayer = MPMusicPlayerController()
+        myPlayer.setQueueWithQuery(self.songsQuery)
+        myPlayer.play()
     }
 }
