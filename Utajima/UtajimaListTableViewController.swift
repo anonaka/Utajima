@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UtajimaListTableViewController: UITableViewController,UITableViewDataSource,UITableViewDelegate{
+class UtajimaListTableViewController: UITableViewController{
 
     var utajimaModel = UtajimaModel()
     
