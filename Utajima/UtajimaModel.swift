@@ -18,7 +18,7 @@ class UtajimaModel: NSObject {
         super.init()
         self.listupAllMusics()
         
-        self.playAsong()
+        //self.playAsong()
     }
     
     func listupAllMusics(){
@@ -27,6 +27,14 @@ class UtajimaModel: NSObject {
             println(item.title)
             //println(item.albumTitle)
         }
+    }
+    
+    func getMusicsCount() -> Int {
+        return self.songsQuery.items.count
+    }
+    
+    func getTitleAt(index : Int) -> String! {
+        return self.songsQuery.items[index].title
     }
     
     func playAsong(){
