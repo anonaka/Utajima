@@ -15,6 +15,15 @@ class UtajimaListTableViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()       
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+
+        // add swipe action
+        var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        var swipeDown = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
+        self.view.addGestureRecognizer(swipeDown)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -51,7 +60,21 @@ class UtajimaListTableViewController: UITableViewController{
         cell.textLabel.text = self.utajimaModel.getTitleAt(indexPath.row)
         return cell
     }
-    
+ 
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.Right:
+                println("Swiped right")
+            case UISwipeGestureRecognizerDirection.Down:
+                println("Swiped down")
+            default:
+                break
+            }
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
