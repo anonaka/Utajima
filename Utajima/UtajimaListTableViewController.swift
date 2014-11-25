@@ -10,12 +10,16 @@ import UIKit
 
 class UtajimaListTableViewController: UITableViewController{
 
+    //@IBOutlet weak var musicCell: UITableViewCell!
+    
     var utajimaModel = UtajimaModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()       
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
+        var tap = UITapGestureRecognizer(target: self, action: "respondToTap:")
+        
         // add swipe action
         var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
@@ -59,6 +63,17 @@ class UtajimaListTableViewController: UITableViewController{
         // Configure the cell...
         cell.textLabel.text = self.utajimaModel.getTitleAt(indexPath.row)
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        println(indexPath)
+    }
+    
+    func respondToTap(sender: UITapGestureRecognizer) {
+        if sender.state == .Ended {
+            // handling code
+            println("handle tap")
+        }
     }
  
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
