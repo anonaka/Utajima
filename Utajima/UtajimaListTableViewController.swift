@@ -19,6 +19,8 @@ class UtajimaListTableViewController: UITableViewController{
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
         var tap = UITapGestureRecognizer(target: self, action: "respondToTap:")
+        tap.numberOfTapsRequired = 2
+        self.view.addGestureRecognizer(tap)
         
         // add swipe action
         var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
