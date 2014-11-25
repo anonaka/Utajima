@@ -16,7 +16,8 @@ class UtajimaListTableViewController: UITableViewController{
         super.viewDidLoad()       
         tableView.delegate = self
         tableView.dataSource = self
-       
+        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -31,22 +32,24 @@ class UtajimaListTableViewController: UITableViewController{
 
     // MARK: - Table view data source
 
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 0
+        return 1
     }
-
+    
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return self.utajimaModel.getMusicsCount()
     }
-
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
 
+        // let cell = UITableViewCell()
         // Configure the cell...
         cell.textLabel.text = self.utajimaModel.getTitleAt(indexPath.row)
         return cell
