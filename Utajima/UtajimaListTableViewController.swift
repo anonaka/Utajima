@@ -14,8 +14,6 @@ class UtajimaListTableViewController: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()       
-        tableView.delegate = self
-        tableView.dataSource = self
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         // Uncomment the following line to preserve selection between presentations
@@ -49,7 +47,6 @@ class UtajimaListTableViewController: UITableViewController{
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
 
-        // let cell = UITableViewCell()
         // Configure the cell...
         cell.textLabel.text = self.utajimaModel.getTitleAt(indexPath.row)
         return cell
