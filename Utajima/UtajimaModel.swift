@@ -12,6 +12,8 @@ import AVFoundation
 
 class UtajimaModel: NSObject {
     var songsQuery : MPMediaQuery! = nil
+    var playbackQueue : MPMediaQuery! = nil
+    let myPlayer = MPMusicPlayerController()
     
     override init(){
         println("hi utajmamodel")
@@ -37,9 +39,13 @@ class UtajimaModel: NSObject {
         return self.songsQuery.items[index].title
     }
     
+    func addSongToPlaybackQueue(aSong : MPMediaQuery){
+        // add a selected song to the playback queue
+        
+    }
+    
     func playAsong(){
         println("play!")
-        var myPlayer = MPMusicPlayerController()
         myPlayer.setQueueWithQuery(self.songsQuery)
         myPlayer.play()
     }
