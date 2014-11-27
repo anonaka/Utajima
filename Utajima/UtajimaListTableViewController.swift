@@ -56,6 +56,8 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
     func mediaPicker(mediaPicker: MPMediaPickerController!,
         didPickMediaItems mediaItemCollection: MPMediaItemCollection!){
         println("music picked")
+        mediaPicker.dismissViewControllerAnimated(true, completion: nil)
+        return
     }
 
     
