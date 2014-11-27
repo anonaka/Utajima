@@ -8,47 +8,38 @@
 
 import UIKit
 import MediaPlayer
-import AVFoundation
 
 class UtajimaModel: NSObject {
-    var playbackQueue : MPMediaQuery! = nil
-    let myPlayer = MPMusicPlayerController()
     
-    override init(){
+    var viewController:UtajimaListTableViewController! = nil
+    var musicCollection:MPMediaItemCollection! = nil
+    let myPlayer = MPMusicPlayerController.applicationMusicPlayer()
+    
+    init(viewController: UtajimaListTableViewController){
         println("hi utajmamodel")
+        self.viewController = viewController
         super.init()
     }
     
-    
-    /*
-    func listupAllMusics(){
-        self.songsQuery = MPMediaQuery.songsQuery()
-        for item in self.songsQuery.items {
-            println(item.title)
-            //println(item.albumTitle)
-        }
-    }
-    */
-    
     func getMusicsCount() -> Int {
-        if (self.playbackQueue != nil){
-            return self.playbackQueue.items.count
+        if (self.musicCollection != nil){
+            return self.musicCollection.items.count
         } else {
             return 0
         }
     }
     
     func getTitleAt(index : Int) -> String! {
-        return self.playbackQueue.items[index].title
+        println(self.musicCollection.items[index].title)
+        return self.musicCollection.items[index].title
     }
     
-    func addSongToPlaybackQueue(aSong : MPMediaQuery){
+    func addSongToPlaybackQueue(items:MPMediaItemCollection){
         // add a selected song to the playback queue
-    }
-    
-    func playAsong(){
-        println("play!")
-        myPlayer.setQueueWithQuery(self.playbackQueue)
+        println("add songs to the playback queue")
+        self.musicCollection = items
+        self.viewController.reloadInputViews()
+        myPlayer.setQueueWithItemCollection(items)
         myPlayer.play()
     }
 }

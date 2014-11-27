@@ -11,15 +11,16 @@ import MediaPlayer
 
 class UtajimaListTableViewController: UITableViewController, MPMediaPickerControllerDelegate{
     
-    let utajimaModel = UtajimaModel()
-    //var utajimaCollection :MPMediaItemCollection = MPMediaItemCollection()
+    var utajimaModel: UtajimaModel!  = nil
+ 
     let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
     
     @IBOutlet weak var AddSongButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()       
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        //self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.utajimaModel = UtajimaModel(viewController: self)
 
         var tap = UITapGestureRecognizer(target: self, action: "respondToTap:")
         tap.numberOfTapsRequired = 2
@@ -55,8 +56,8 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
     
     func mediaPicker(mediaPicker: MPMediaPickerController!,
         didPickMediaItems mediaItemCollection: MPMediaItemCollection!){
-        println("music picked")
         mediaPicker.dismissViewControllerAnimated(true, completion: nil)
+        self.utajimaModel.addSongToPlaybackQueue(mediaItemCollection)
         return
     }
 
