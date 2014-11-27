@@ -13,7 +13,7 @@ class UtajimaModel: NSObject {
     
     var viewController:UtajimaListTableViewController! = nil
     var musicCollection:MPMediaItemCollection! = nil
-    let myPlayer = MPMusicPlayerController.applicationMusicPlayer()
+    let myPlayer = MPMusicPlayerController.iPodMusicPlayer()
     
     init(viewController: UtajimaListTableViewController){
         println("hi utajmamodel")
@@ -38,8 +38,12 @@ class UtajimaModel: NSObject {
         // add a selected song to the playback queue
         println("add songs to the playback queue")
         self.musicCollection = items
+        
+        //TODO reload all the cells in table view
         self.viewController.reloadInputViews()
+        //self.viewController.updateVisibleCells()
         myPlayer.setQueueWithItemCollection(items)
         myPlayer.play()
+        //myPlayer.stop()
     }
 }

@@ -11,12 +11,10 @@ import MediaPlayer
 
 class UtajimaListTableViewController: UITableViewController, MPMediaPickerControllerDelegate{
     
-    var utajimaModel: UtajimaModel!  = nil
- 
-    let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
-    
     @IBOutlet weak var AddSongButton: UIBarButtonItem!
-    
+    var utajimaModel: UtajimaModel!  = nil
+    let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
+    	
     override func viewDidLoad() {
         super.viewDidLoad()       
         //self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -49,7 +47,6 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
         self.runMediaPicker()
     }
     
-    
     func runMediaPicker() {
         self.presentViewController(self.myMediaPicker, animated: true, completion: nil)
     }
@@ -60,7 +57,6 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
         self.utajimaModel.addSongToPlaybackQueue(mediaItemCollection)
         return
     }
-
     
     func mediaPickerDidCancel(){
          println("music pickup cancelled")
@@ -73,13 +69,11 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
 
     // MARK: - Table view data source
 
-    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
-    
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
@@ -93,6 +87,13 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
         // Configure the cell...
         cell.textLabel.text = self.utajimaModel.getTitleAt(indexPath.row)
         return cell
+    }
+    
+    func updateVisibleCells(){
+        for vc in self.tableView.visibleCells() as [UITableViewCell]{
+            println("visible cells")
+            vc.reloadInputViews()
+        }
     }
     
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
