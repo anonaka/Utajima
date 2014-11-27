@@ -13,6 +13,8 @@ class UtajimaListTableViewController: UITableViewController{
     
     var utajimaModel = UtajimaModel()
     
+    @IBOutlet weak var AddSongButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()       
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -39,7 +41,8 @@ class UtajimaListTableViewController: UITableViewController{
     }
 
     func runMediaPicker() {
-        var mediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
+        let mediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
+        mediaPicker.allowsPickingMultipleItems = true
         self.presentViewController(mediaPicker, animated: true, completion: nil)
     }
     

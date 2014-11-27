@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
-        <!--Utajima List Table View Controller-->
+        <!--Utajima-->
         <scene sceneID="Iv9-WW-DRW">
             <objects>
                 <tableViewController id="bPa-40-vIG" customClass="UtajimaListTableViewController" customModule="Utajima" customModuleProvider="target" sceneMemberID="viewController">
@@ -25,7 +25,12 @@
                             <outlet property="delegate" destination="bPa-40-vIG" id="opZ-7l-cYk"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="2nd-Ii-Dun"/>
+                    <navigationItem key="navigationItem" title="Utajima" id="2nd-Ii-Dun">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="upI-q2-Mzl"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="AddSongButton" destination="upI-q2-Mzl" id="OyS-v3-jom"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EhC-bJ-F5f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
