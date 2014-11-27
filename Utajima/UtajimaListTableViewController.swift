@@ -9,9 +9,11 @@
 import UIKit
 import MediaPlayer
 
-class UtajimaListTableViewController: UITableViewController{
+class UtajimaListTableViewController: UITableViewController, MPMediaPickerControllerDelegate{
     
-    var utajimaModel = UtajimaModel()
+    let utajimaModel = UtajimaModel()
+    //var utajimaCollection :MPMediaItemCollection = MPMediaItemCollection()
+    let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
     
     @IBOutlet weak var AddSongButton: UIBarButtonItem!
     
@@ -31,8 +33,10 @@ class UtajimaListTableViewController: UITableViewController{
         var swipeDown = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
         swipeDown.direction = UISwipeGestureRecognizerDirection.Down
         self.view.addGestureRecognizer(swipeDown)
+
+        self.myMediaPicker.allowsPickingMultipleItems = true
+        self.myMediaPicker.delegate = self
         
-        self.runMediaPicker()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -46,11 +50,19 @@ class UtajimaListTableViewController: UITableViewController{
     
     
     func runMediaPicker() {
-        let mediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
-        mediaPicker.allowsPickingMultipleItems = true
-        self.presentViewController(mediaPicker, animated: true, completion: nil)
+        self.presentViewController(self.myMediaPicker, animated: true, completion: nil)
     }
     
+    func mediaPicker(mediaPicker: MPMediaPickerController!,
+        didPickMediaItems mediaItemCollection: MPMediaItemCollection!){
+        println("music picked")
+    }
+
+    
+    func mediaPickerDidCancel(){
+         println("music pickup cancelled")
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
