@@ -40,6 +40,11 @@ class UtajimaListTableViewController: UITableViewController{
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    @IBAction func addSongsToPlaybackQueue(sender: AnyObject) {
+        self.runMediaPicker()
+    }
+    
+    
     func runMediaPicker() {
         let mediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
         mediaPicker.allowsPickingMultipleItems = true

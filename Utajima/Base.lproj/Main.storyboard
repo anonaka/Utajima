@@ -26,7 +26,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Utajima" id="2nd-Ii-Dun">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="upI-q2-Mzl"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="upI-q2-Mzl">
+                            <connections>
+                                <action selector="addSongsToPlaybackQueue:" destination="bPa-40-vIG" id="XLU-CJ-RGd"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="AddSongButton" destination="upI-q2-Mzl" id="OyS-v3-jom"/>
