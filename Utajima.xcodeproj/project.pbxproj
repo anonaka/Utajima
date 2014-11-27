@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B72DBDA1A258F9200CD7138 /* IMG_1526.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 0B72DBD91A258F9200CD7138 /* IMG_1526.JPG */; };
 		5872AA601A200DFA00B3A574 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872AA5F1A200DFA00B3A574 /* AppDelegate.swift */; };
 		5872AA651A200DFA00B3A574 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5872AA631A200DFA00B3A574 /* Main.storyboard */; };
 		5872AA671A200DFA00B3A574 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5872AA661A200DFA00B3A574 /* Images.xcassets */; };
@@ -28,7 +27,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B72DBD91A258F9200CD7138 /* IMG_1526.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = IMG_1526.JPG; path = ../../Desktop/IMG_1526.JPG; sourceTree = "<group>"; };
 		5872AA5A1A200DFA00B3A574 /* Utajima.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Utajima.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5872AA5E1A200DFA00B3A574 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5872AA5F1A200DFA00B3A574 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 			isa = PBXGroup;
 			children = (
 				5872AA5E1A200DFA00B3A574 /* Info.plist */,
-				0B72DBD91A258F9200CD7138 /* IMG_1526.JPG */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -200,7 +197,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5872AA651A200DFA00B3A574 /* Main.storyboard in Resources */,
-				0B72DBDA1A258F9200CD7138 /* IMG_1526.JPG in Resources */,
 				5872AA6A1A200DFA00B3A574 /* LaunchScreen.xib in Resources */,
 				5872AA671A200DFA00B3A574 /* Images.xcassets in Resources */,
 			);

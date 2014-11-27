@@ -7,10 +7,9 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class UtajimaListTableViewController: UITableViewController{
-
-    //@IBOutlet weak var musicCell: UITableViewCell!
     
     var utajimaModel = UtajimaModel()
     
@@ -31,6 +30,7 @@ class UtajimaListTableViewController: UITableViewController{
         swipeDown.direction = UISwipeGestureRecognizerDirection.Down
         self.view.addGestureRecognizer(swipeDown)
         
+        self.runMediaPicker()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -38,6 +38,11 @@ class UtajimaListTableViewController: UITableViewController{
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    func runMediaPicker() {
+        var mediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
+        self.presentViewController(mediaPicker, animated: true, completion: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
