@@ -34,6 +34,10 @@ class UtajimaModel: NSObject {
     func getAlbumTitleAt(index : Int) -> String! {
         return self.musicCollection[index].albumTitle
     }
+    
+    func getArtworkAt(index : Int) -> MPMediaItemArtwork! {
+        return self.musicCollection[index].artwork
+    }
 
     func addSongToPlaybackQueue(mediaCollection:MPMediaItemCollection){
         // add a selected song to the playback queue
