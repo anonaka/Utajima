@@ -8,7 +8,7 @@
         <scene sceneID="Iv9-WW-DRW">
             <objects>
                 <tableViewController id="bPa-40-vIG" customClass="UtajimaListTableViewController" customModule="Utajima" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="f0Q-Lj-JBq">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="4" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="24" id="f0Q-Lj-JBq">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -39,6 +39,7 @@
                             <outlet property="delegate" destination="bPa-40-vIG" id="opZ-7l-cYk"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Utajima" prompt="kataoke type music player" id="2nd-Ii-Dun">
                         <barButtonItem key="leftBarButtonItem" systemItem="add" id="upI-q2-Mzl">
                             <connections>
@@ -46,6 +47,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="AddSongButton" destination="upI-q2-Mzl" id="OyS-v3-jom"/>
                     </connections>

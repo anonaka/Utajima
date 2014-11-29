@@ -27,16 +27,17 @@ class UtajimaModel: NSObject {
         return self.musicCollection.count
     }
     
-    func getTitleAt(index : Int) -> String! {
-        return self.musicCollection[index].title
+    func getTitleAt(index : Int) -> String? {
+        return self.musicCollection[index].title?
     }
 
-    func getAlbumTitleAt(index : Int) -> String! {
-        return self.musicCollection[index].albumTitle
+    func getAlbumTitleAt(index : Int) -> String? {
+        return self.musicCollection[index].albumTitle?
     }
     
-    func getArtworkAt(index : Int) -> MPMediaItemArtwork! {
-        return self.musicCollection[index].artwork
+    func getArtworkAt(index : Int) -> MPMediaItemArtwork? {
+        //TODO retuen default artwork when nil
+        return self.musicCollection[index].artwork?
     }
 
     func addSongToPlaybackQueue(mediaCollection:MPMediaItemCollection){
