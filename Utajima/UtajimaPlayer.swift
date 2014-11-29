@@ -41,11 +41,7 @@ class UtajimaPlayer: NSObject {
         }
     }
 
-    //TODO need revise
-    func getNextSongAndPlay() -> AnyObject {
-        return self.model.getNextSong()
-    }
-    
+
     func get1stSong() -> AnyObject{
         return self.model.musicCollection[0]
     }

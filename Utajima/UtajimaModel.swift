@@ -22,11 +22,6 @@ class UtajimaModel: NSObject {
         self.myPlayer = UtajimaPlayer(model: self)
     }
     
-    func getNextSong() -> AnyObject {
-        self.musicCollection.removeAtIndex(0)
-        return self.musicCollection[0]
-    }
-    
     func getMusicsCount() -> Int {
         return self.musicCollection.count
     }
@@ -41,8 +36,8 @@ class UtajimaModel: NSObject {
         //TODO reload all the cells in table view
         self.viewController.reloadInputViews()
         //self.viewController.updateVisibleCells()
-
         self.musicCollection +=  mediaCollection.items
-        self.myPlayer.play1st()
+
+        //self.myPlayer.play1st()
     }
 }
