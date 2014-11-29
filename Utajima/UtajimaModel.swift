@@ -23,6 +23,7 @@ class UtajimaModel: NSObject {
     }
     
     func getMusicsCount() -> Int {
+        println("music count: \(self.musicCollection.count)")
         return self.musicCollection.count
     }
     
@@ -39,5 +40,15 @@ class UtajimaModel: NSObject {
         self.musicCollection +=  mediaCollection.items
 
         //self.myPlayer.play1st()
+    }
+    
+    func removePlaybackQueueAtIndex(index:Int){
+        self.musicCollection.removeAtIndex(index)
+    }
+    
+    func movePlaybackQueue(from:Int,to:Int){
+        let tmpobj:AnyObject = self.musicCollection[from]
+        self.musicCollection.removeAtIndex(from)
+        self.musicCollection.insert(tmpobj, atIndex: to)
     }
 }
