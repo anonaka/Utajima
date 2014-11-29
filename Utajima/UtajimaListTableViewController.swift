@@ -94,7 +94,7 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
             vc.reloadInputViews()
         }
     }
-    
+        
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
     }
     

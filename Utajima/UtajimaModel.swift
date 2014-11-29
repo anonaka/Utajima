@@ -58,7 +58,7 @@ class UtajimaModel: NSObject {
     
     func playDone(){
         self.musicCollection.removeAtIndex(0)
-        self.viewController.updateVisibleCells()
+        self.viewController.tableView.reloadData()
         // play next song
         self.play()
     }
