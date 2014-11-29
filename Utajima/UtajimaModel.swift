@@ -23,23 +23,23 @@ class UtajimaModel: NSObject {
     }
     
     func getMusicsCount() -> Int {
-        println("music count: \(self.musicCollection.count)")
+        //println("music count: \(self.musicCollection.count)")
         return self.musicCollection.count
     }
     
     func getTitleAt(index : Int) -> String! {
-        println(self.musicCollection[index].title)
         return self.musicCollection[index].title
     }
-    
+
+    func getAlbumTitleAt(index : Int) -> String! {
+        return self.musicCollection[index].albumTitle
+    }
+
     func addSongToPlaybackQueue(mediaCollection:MPMediaItemCollection){
         // add a selected song to the playback queue
-        //TODO reload all the cells in table view
         self.viewController.reloadInputViews()
-        //self.viewController.updateVisibleCells()
         self.musicCollection +=  mediaCollection.items
-
-        //self.myPlayer.play1st()
+        
     }
     
     func removePlaybackQueueAtIndex(index:Int){
@@ -50,5 +50,16 @@ class UtajimaModel: NSObject {
         let tmpobj:AnyObject = self.musicCollection[from]
         self.musicCollection.removeAtIndex(from)
         self.musicCollection.insert(tmpobj, atIndex: to)
+    }
+    
+    func play(){
+        self.myPlayer.play1st()
+    }
+    
+    func playDone(){
+        self.musicCollection.removeAtIndex(0)
+        self.viewController.updateVisibleCells()
+        // play next song
+        self.play()
     }
 }

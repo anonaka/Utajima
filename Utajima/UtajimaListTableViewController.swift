@@ -91,24 +91,20 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
     
     func updateVisibleCells(){
         for vc in self.tableView.visibleCells() as [UITableViewCell]{
-            println("visible cells")
             vc.reloadInputViews()
         }
     }
     
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        println(indexPath)
     }
     
     func respondToTap(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
-            // handling code
-            println("handle tap")
+            self.utajimaModel.play()
         }
     }
  
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             
             switch swipeGesture.direction {
@@ -160,7 +156,6 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
         }
     }
     
-
     /*
     // MARK: - Navigation
 

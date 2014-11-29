@@ -18,6 +18,7 @@ class UtajimaPlayer: NSObject {
         super.init()
         self.model = model
         let notificationCenter = NSNotificationCenter.defaultCenter()
+ 
         /*
         notificationCenter.addObserver(
             self,
@@ -36,20 +37,29 @@ class UtajimaPlayer: NSObject {
     }
     
     func statusChanged(notification: NSNotification?){
-        if (mpPlayer.playbackState == MPMusicPlaybackState.Stopped) {
-            println("Stopped")
+        if (mpPlayer.playbackState == .Stopped) {
+            self.model.playDone()
         }
     }
 
-
-    func get1stSong() -> AnyObject{
-        return self.model.musicCollection[0]
+    func get1stSong() -> AnyObject?{
+        if self.model.musicCollection.isEmpty == false {
+            return self.model.musicCollection[0]
+        } else {
+            return nil
+        }
     }
     
     func play1st(){
-        var items:MPMediaItemCollection = MPMediaItemCollection(items:[self.get1stSong()])
-        mpPlayer.setQueueWithItemCollection(items)
-        mpPlayer.play()
-        self.mpPlayer.beginGeneratingPlaybackNotifications()
+        if (mpPlayer.playbackState != .Playing) {
+            //TODO there must be smarter way to do this check
+            var song : AnyObject? = self.get1stSong()
+            if song == nil {return}
+            
+            var items:MPMediaItemCollection = MPMediaItemCollection(items:[song!])
+            mpPlayer.setQueueWithItemCollection(items)
+            mpPlayer.play()
+            self.mpPlayer.beginGeneratingPlaybackNotifications()
+        }
     }
 }
