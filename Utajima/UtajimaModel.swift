@@ -12,38 +12,37 @@ import MediaPlayer
 class UtajimaModel: NSObject {
     
     var viewController:UtajimaListTableViewController! = nil
-    var musicCollection:MPMediaItemCollection! = nil
-    let myPlayer = MPMusicPlayerController.iPodMusicPlayer()
+    var musicCollection: [AnyObject] = []
+    var myPlayer:UtajimaPlayer! = nil
     
     init(viewController: UtajimaListTableViewController){
         println("hi utajmamodel")
-        self.viewController = viewController
         super.init()
+        self.viewController = viewController
+        self.myPlayer = UtajimaPlayer(model: self)
+    }
+    
+    func getNextSong() -> AnyObject {
+        self.musicCollection.removeAtIndex(0)
+        return self.musicCollection[0]
     }
     
     func getMusicsCount() -> Int {
-        if (self.musicCollection != nil){
-            return self.musicCollection.items.count
-        } else {
-            return 0
-        }
+        return self.musicCollection.count
     }
     
     func getTitleAt(index : Int) -> String! {
-        println(self.musicCollection.items[index].title)
-        return self.musicCollection.items[index].title
+        println(self.musicCollection[index].title)
+        return self.musicCollection[index].title
     }
     
-    func addSongToPlaybackQueue(items:MPMediaItemCollection){
+    func addSongToPlaybackQueue(mediaCollection:MPMediaItemCollection){
         // add a selected song to the playback queue
-        println("add songs to the playback queue")
-        self.musicCollection = items
-        
         //TODO reload all the cells in table view
         self.viewController.reloadInputViews()
         //self.viewController.updateVisibleCells()
-        myPlayer.setQueueWithItemCollection(items)
-        myPlayer.play()
-        //myPlayer.stop()
+
+        self.musicCollection +=  mediaCollection.items
+        self.myPlayer.play1st()
     }
 }
