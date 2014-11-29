@@ -10,20 +10,50 @@ import UIKit
 import MediaPlayer
 
 class UtajimaPlayer: NSObject {
-    let mpPlayer = MPMusicPlayerController.applicationMusicPlayer()
+    // application music player does not work in background...
+    let mpPlayer = MPMusicPlayerController.iPodMusicPlayer()
     var model:UtajimaModel! = nil
     
     init(model:UtajimaModel){
+        super.init()
         self.model = model
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        /*
+        notificationCenter.addObserver(
+            self,
+            selector: "statusChanged:",
+            name: "MPMusicPlayerControllerNowPlayingItemDidChangeNotification",
+            object: self.mpPlayer)
+        
+        */
+       
+        notificationCenter.addObserver(
+            self,
+            selector: "statusChanged:",
+            name: "MPMusicPlayerControllerPlaybackStateDidChangeNotification",
+            object: self.mpPlayer)
+        
     }
     
-    func getNextSong() -> AnyObject {
+    func statusChanged(notification: NSNotification?){
+        if (mpPlayer.playbackState == MPMusicPlaybackState.Stopped) {
+            println("Stopped")
+        }
+    }
+
+    //TODO need revise
+    func getNextSongAndPlay() -> AnyObject {
         return self.model.getNextSong()
     }
     
+    func get1stSong() -> AnyObject{
+        return self.model.musicCollection[0]
+    }
+    
     func play1st(){
-        var items:MPMediaItemCollection = MPMediaItemCollection(items:[self.getNextSong()])
+        var items:MPMediaItemCollection = MPMediaItemCollection(items:[self.get1stSong()])
         mpPlayer.setQueueWithItemCollection(items)
         mpPlayer.play()
+        self.mpPlayer.beginGeneratingPlaybackNotifications()
     }
 }
