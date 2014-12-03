@@ -16,6 +16,7 @@ class UtajimaPlayer: NSObject {
     
     init(model:UtajimaModel){
         super.init()
+        self.mpPlayer.repeatMode = .None
         self.model = model
         let notificationCenter = NSNotificationCenter.defaultCenter()
  
