@@ -40,7 +40,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Utajima" prompt="kataoke type music player" id="2nd-Ii-Dun">
+                    <navigationItem key="navigationItem" title="Utajima" prompt="karaoke type music player" id="2nd-Ii-Dun">
                         <barButtonItem key="leftBarButtonItem" systemItem="add" id="upI-q2-Mzl">
                             <connections>
                                 <action selector="addSongsToPlaybackQueue:" destination="bPa-40-vIG" id="XLU-CJ-RGd"/>

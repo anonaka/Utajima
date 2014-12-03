@@ -41,6 +41,8 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        self.addFooter()
     }
 
 
@@ -161,6 +163,39 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
         } else {
             return true
         }
+    }
+   
+    
+    // Build Footer
+    let footerHeight:CGFloat = CGFloat(70.0)
+    
+//    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return self.footerHeight
+//    }
+//    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        let footerFrame:CGRect = CGRect(
+//            x: 0.0,
+//            y: tableView.frame.height - footerHeight,
+//            width: tableView.frame.width,
+//            height: self.footerHeight)
+//        let footerView:UIView = UIView(frame: footerFrame)
+//        footerView.backgroundColor = UIColor.darkGrayColor()
+//        return footerView
+//    }
+
+    
+    func addFooter(){
+        let appDelegate:UIApplicationDelegate? = UIApplication.sharedApplication().delegate
+        let footerFrame:CGRect = CGRect(
+            x: 0.0,
+            //y: self.tableView.frame.height - self.footerHeight,
+            y: UIScreen.mainScreen().bounds.height - self.footerHeight,
+            width: UIScreen.mainScreen().bounds.width,
+            height: self.footerHeight)
+        let footer:UIView = UIView(frame: footerFrame)
+        footer.backgroundColor =  UIColor.redColor()
+        appDelegate?.window??.addSubview(footer)
+        //self.tableView.tableFooterView = footer
     }
     
     /*
