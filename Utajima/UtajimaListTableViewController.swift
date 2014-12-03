@@ -54,6 +54,7 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
     }
     
     func runMediaPicker() {
+        self.hideController(true)
         self.presentViewController(self.myMediaPicker, animated: true, completion: nil)
     }
     
@@ -61,6 +62,7 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
         didPickMediaItems mediaItemCollection: MPMediaItemCollection!){
         mediaPicker.dismissViewControllerAnimated(true, completion: nil)
         self.utajimaModel.addSongToPlaybackQueue(mediaItemCollection)
+        self.hideController(false)
         return
     }
     
@@ -167,7 +169,9 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
    
     
     // Build Footer
+    //TODO refacter these !!
     let footerHeight:CGFloat = CGFloat(70.0)
+    var utajimaControllerView: UIView? = nil;
     
 //    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 //        return self.footerHeight
@@ -192,10 +196,14 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
             y: UIScreen.mainScreen().bounds.height - self.footerHeight,
             width: UIScreen.mainScreen().bounds.width,
             height: self.footerHeight)
-        let footer:UIView = UIView(frame: footerFrame)
-        footer.backgroundColor =  UIColor.redColor()
-        appDelegate?.window??.addSubview(footer)
+        self.utajimaControllerView = UIView(frame: footerFrame)
+        self.utajimaControllerView!.backgroundColor =  UIColor.redColor()
+        appDelegate?.window??.addSubview(self.utajimaControllerView!)
         //self.tableView.tableFooterView = footer
+    }
+    
+    func hideController(mode:Bool){
+        self.utajimaControllerView!.hidden = mode
     }
     
     /*
