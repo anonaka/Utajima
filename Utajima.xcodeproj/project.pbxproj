@@ -168,6 +168,11 @@
 					5872AA591A200DFA00B3A574 = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = 8V99B9RASA;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					5872AA6E1A200DFA00B3A574 = {
 						CreatedOnToolsVersion = 6.1;
