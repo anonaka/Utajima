@@ -93,10 +93,10 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
 
         // Configure the cell...
-        cell.textLabel.text = self.utajimaModel.getTitleAt(indexPath.row)
+        cell.textLabel?.text = self.utajimaModel.getTitleAt(indexPath.row)
         cell.detailTextLabel?.text = self.utajimaModel.getAlbumTitleAt(indexPath.row)
         var image:UIImage? = self.utajimaModel.getArtworkAt(indexPath.row)?.imageWithSize(CGSizeMake(80.0,80.0))
-        cell.imageView.image = image
+        cell.imageView?.image = image
         return cell
     }
     
