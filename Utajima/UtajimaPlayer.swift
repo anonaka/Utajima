@@ -11,7 +11,7 @@ import MediaPlayer
 
 class UtajimaPlayer: NSObject {
     // application music player does not work in background...
-    let mpPlayer = MPMusicPlayerController.iPodMusicPlayer()
+    let mpPlayer = MPMusicPlayerController.applicationMusicPlayer()
     var model:UtajimaModel! = nil
     
     init(model:UtajimaModel){
