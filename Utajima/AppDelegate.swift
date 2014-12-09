@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND,0)
+    var model : NSObject? = nil
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -31,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func myBackgroundTask() {
-        NSThread.sleepForTimeInterval(0.5)
+        NSThread.sleepForTimeInterval(1.5)
         println("this is back ground task")
         dispatch_async(self.backgroundQueue, myBackgroundTask)
     }

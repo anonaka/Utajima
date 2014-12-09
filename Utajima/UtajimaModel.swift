@@ -18,6 +18,8 @@ class UtajimaModel: NSObject {
     init(viewController: UtajimaListTableViewController){
         println("hi utajmamodel")
         super.init()
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        appDelegate.model = self
         self.viewController = viewController
         self.myPlayer = UtajimaPlayer(model: self)
     }
