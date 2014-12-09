@@ -27,15 +27,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(application: UIApplication) {
         println("did enter background")
-        application.beginBackgroundTaskWithName("myBgTask", expirationHandler: nil)
+        application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
         dispatch_async(self.backgroundQueue, myBackgroundTask)
     }
     
     func myBackgroundTask() {
         // this is not elegant but works for now...
-        NSThread.sleepForTimeInterval(60.0 * 10)
+        NSThread.sleepForTimeInterval(10.0)
         println("this is back ground task")
         dispatch_async(self.backgroundQueue, myBackgroundTask)
+    }
+    
+    func myExpiratonHandler(){
+        println("expiration handler called.")
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
