@@ -8,6 +8,8 @@
 
 import UIKit
 import MediaPlayer
+import AVFoundation
+
 
 class UtajimaPlayer: NSObject {
     // application music player does not work in background...

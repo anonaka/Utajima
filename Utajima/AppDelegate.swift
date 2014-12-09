@@ -12,8 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND,0)
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         return true
@@ -25,16 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         println("did enter background")
-
-        let qualityOfServiceClass = Int(QOS_CLASS_BACKGROUND.value)
-        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-        dispatch_async(backgroundQueue, {
-            println("This is run on the background queue")
-            
-        })
+        application.beginBackgroundTaskWithName("myBgTask", expirationHandler: nil)
+        dispatch_async(self.backgroundQueue, myBackgroundTask)
+    }
+    
+    func myBackgroundTask() {
+        NSThread.sleepForTimeInterval(0.5)
+        println("this is back ground task")
+        dispatch_async(self.backgroundQueue, myBackgroundTask)
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
