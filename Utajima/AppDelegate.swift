@@ -33,8 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func myBackgroundTask() {
         // this is not elegant but works for now...
-        NSThread.sleepForTimeInterval(10.0)
+        NSThread.sleepForTimeInterval(1.0)
         println("this is back ground task")
+        var time = UIApplication.sharedApplication().backgroundTimeRemaining
+        println("Time remaining: \(Int(time)) sec")
         dispatch_async(self.backgroundQueue, myBackgroundTask)
     }
     
