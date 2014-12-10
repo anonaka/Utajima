@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSThread.sleepForTimeInterval(1.0)
         println("this is back ground task")
         var time = UIApplication.sharedApplication().backgroundTimeRemaining
-        println("Time remaining: \(Int(time)) sec")
+        println(String(format: "Time remaining: %.3f sec" ,time))
         dispatch_async(self.backgroundQueue, myBackgroundTask)
     }
     
