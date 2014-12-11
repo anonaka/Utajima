@@ -14,6 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND,0)
     var model : NSObject? = nil
+    var bgTaskId:UIBackgroundTaskIdentifier = 0
+    
+    override init(){
+        super.init()
+    }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -25,15 +30,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
+
+    
     func applicationDidEnterBackground(application: UIApplication) {
         println("did enter background")
-        application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
+        self.bgTaskId = application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
         dispatch_async(self.backgroundQueue, myBackgroundTask)
     }
     
+
     func myBackgroundTask() {
         // this is not elegant but works for now...
-        NSThread.sleepForTimeInterval(1.0)
+        NSThread.sleepForTimeInterval(5.0)
         println("this is back ground task")
         var time = UIApplication.sharedApplication().backgroundTimeRemaining
         println(String(format: "Time remaining: %.3f sec" ,time))
@@ -42,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func myExpiratonHandler(){
         println("expiration handler called.")
+        UIApplication.sharedApplication().endBackgroundTask(self.bgTaskId)
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
