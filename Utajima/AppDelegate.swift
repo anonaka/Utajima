@@ -13,8 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND,0)
-    var model : NSObject? = nil
-    var bgTaskId:UIBackgroundTaskIdentifier = 0
+    var model : UtajimaModel? = nil
+    var bgTaskId:UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
     
     override init(){
         super.init()
@@ -34,7 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidEnterBackground(application: UIApplication) {
         println("did enter background")
-        self.bgTaskId = application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
+        if (self.bgTaskId == UIBackgroundTaskInvalid){
+            self.bgTaskId = application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
+        }
         //dispatch_async(self.backgroundQueue, myBackgroundTask)
     }
     
@@ -51,13 +53,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func myExpiratonHandler(){
         let application:UIApplication = UIApplication.sharedApplication()
         println("expiration handler called.")
-        application.endBackgroundTask(self.bgTaskId)
-        self.bgTaskId = application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
-
+        if (self.bgTaskId != UIBackgroundTaskInvalid) {
+            application.endBackgroundTask(self.bgTaskId)
+            self.bgTaskId = UIBackgroundTaskInvalid
+        }
+        //if (self.model?.myPlayer?.mpPlayer.playbackState != .Stopped) {
+            self.bgTaskId = application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
+        //r}
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        application.endBackgroundTask(self.bgTaskId)
+        self.bgTaskId = UIBackgroundTaskInvalid
     }
 
     func applicationDidBecomeActive(application: UIApplication) {

@@ -13,7 +13,7 @@ class UtajimaModel: NSObject {
     
     var viewController:UtajimaListTableViewController! = nil
     var musicCollection: [AnyObject] = []
-    var myPlayer:UtajimaPlayer! = nil
+    var myPlayer:UtajimaPlayer? = nil
     
     init(viewController: UtajimaListTableViewController){
         println("hi utajmamodel")
@@ -60,7 +60,7 @@ class UtajimaModel: NSObject {
     }
     
     func play(){
-        self.myPlayer.play1st()
+        self.myPlayer?.play1st()
     }
     
     func playDone(){
