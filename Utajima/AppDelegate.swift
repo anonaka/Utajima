@@ -33,9 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     func applicationDidEnterBackground(application: UIApplication) {
-        println("did enter background")
+        println("Did enter background: \(self.bgTaskId)")
         if (self.bgTaskId == UIBackgroundTaskInvalid){
             self.bgTaskId = application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
+            println("New bg task id : \(self.bgTaskId)")
         }
         //dispatch_async(self.backgroundQueue, myBackgroundTask)
     }
@@ -43,23 +44,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func myBackgroundTask() {
         // this is not elegant but works for now...
-//        NSThread.sleepForTimeInterval(5.0)
-//        println("this is back ground task")
-//        var time = UIApplication.sharedApplication().backgroundTimeRemaining
-//        println(String(format: "Time remaining: %.3f sec" ,time))
-//        dispatch_async(self.backgroundQueue, myBackgroundTask)
+        NSThread.sleepForTimeInterval(30.0)
+        println("this is back ground task")
+        var time = UIApplication.sharedApplication().backgroundTimeRemaining
+        println(String(format: "Time remaining: %.3f sec" ,time))
+        dispatch_async(self.backgroundQueue, myBackgroundTask)
     }
     
     func myExpiratonHandler(){
         let application:UIApplication = UIApplication.sharedApplication()
-        println("expiration handler called.")
-        if (self.bgTaskId != UIBackgroundTaskInvalid) {
-            application.endBackgroundTask(self.bgTaskId)
-            self.bgTaskId = UIBackgroundTaskInvalid
+        println("Expiration handler called: \(self.bgTaskId)")
+        let oldTaksId = self.bgTaskId
+        self.bgTaskId = application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
+        
+        if (self.bgTaskId == UIBackgroundTaskInvalid){
+            println("Cannot launch bg task any more")
+        } else {
+            println("New bg task id : \(self.bgTaskId)")
         }
-        //if (self.model?.myPlayer?.mpPlayer.playbackState != .Stopped) {
-            self.bgTaskId = application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
-        //r}
+        if (oldTaksId != UIBackgroundTaskInvalid) {
+            println("Terminate old bg task \(oldTaksId)")
+            application.endBackgroundTask(self.bgTaskId)
+        }
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
