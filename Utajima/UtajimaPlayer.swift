@@ -52,5 +52,4 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
         self.model.playDone()
     }
-    
 }
