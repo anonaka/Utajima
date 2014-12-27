@@ -13,12 +13,15 @@ import AVFoundation
 class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
     var model:UtajimaModel! = nil
     var avPlayer:AVAudioPlayer? = nil
+    var audioSession:AVAudioSession = AVAudioSession.sharedInstance()
+    var error: NSErrorPointer = NSErrorPointer()
     
     init(model:UtajimaModel){
         super.init()
         self.model = model
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-    }
+        self.setAudioSession()
+        UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+   }
     
     func statusChanged(notification: NSNotification?){
     }
@@ -36,8 +39,18 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
         if song == nil {return}
         let url:NSURL = song?.valueForProperty(MPMediaItemPropertyAssetURL) as NSURL
         self.avPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
-        //self.avPlayer.delegate = self
+        self.avPlayer!.delegate = self
         println("Duration: \(self.avPlayer!.duration)")
         self.avPlayer!.play()
     }
+    
+    func setAudioSession(){
+        self.audioSession.setCategory(AVAudioSessionCategoryPlayback, error: self.error)
+        self.audioSession.setActive(true, error: self.error)
+    }
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+        self.model.playDone()
+    }
+    
 }
