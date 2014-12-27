@@ -10,38 +10,17 @@ import UIKit
 import MediaPlayer
 import AVFoundation
 
-class UtajimaPlayer: NSObject {
-    // application music player does not work in background...
-    let mpPlayer = MPMusicPlayerController.applicationMusicPlayer()
+class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
     var model:UtajimaModel! = nil
+    var avPlayer:AVAudioPlayer? = nil
     
     init(model:UtajimaModel){
         super.init()
-        self.mpPlayer.repeatMode = .None
         self.model = model
         let notificationCenter = NSNotificationCenter.defaultCenter()
- 
-        /*
-        notificationCenter.addObserver(
-            self,
-            selector: "statusChanged:",
-            name: "MPMusicPlayerControllerNowPlayingItemDidChangeNotification",
-            object: self.mpPlayer)
-        
-        */
-       
-        notificationCenter.addObserver(
-            self,
-            selector: "statusChanged:",
-            name: "MPMusicPlayerControllerPlaybackStateDidChangeNotification",
-            object: self.mpPlayer)
-        
     }
     
     func statusChanged(notification: NSNotification?){
-        if (mpPlayer.playbackState == .Stopped) {
-            self.model.playDone()
-        }
     }
 
     func get1stSong() -> AnyObject?{
@@ -53,15 +32,12 @@ class UtajimaPlayer: NSObject {
     }
     
     func play1st(){
-        if (mpPlayer.playbackState != .Playing) {
-            //TODO there must be smarter way to do this check
-            var song : AnyObject? = self.get1stSong()
-            if song == nil {return}
-            
-            var items:MPMediaItemCollection = MPMediaItemCollection(items:[song!])
-            mpPlayer.setQueueWithItemCollection(items)
-            mpPlayer.play()
-            self.mpPlayer.beginGeneratingPlaybackNotifications()
-        }
+        var song : AnyObject? = self.get1stSong()
+        if song == nil {return}
+        let url:NSURL = song?.valueForProperty(MPMediaItemPropertyAssetURL) as NSURL
+        self.avPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
+        //self.avPlayer.delegate = self
+        println("Duration: \(self.avPlayer!.duration)")
+        self.avPlayer!.play()
     }
 }

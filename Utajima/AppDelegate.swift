@@ -32,52 +32,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     
-    func applicationDidEnterBackground(application: UIApplication) {
-        println("Did enter background: \(self.bgTaskId)")
-        if (self.bgTaskId == UIBackgroundTaskInvalid){
-            self.bgTaskId = application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
-            println("New bg task id : \(self.bgTaskId)")
-        }
-        //dispatch_async(self.backgroundQueue, myBackgroundTask)
-    }
-    
-
-    func myBackgroundTask() {
-        // this is not elegant but works for now...
-        NSThread.sleepForTimeInterval(30.0)
-        println("this is back ground task")
-        var time = UIApplication.sharedApplication().backgroundTimeRemaining
-        println(String(format: "Time remaining: %.3f sec" ,time))
-        dispatch_async(self.backgroundQueue, myBackgroundTask)
-    }
-    
-    func myExpiratonHandler(){
-        let application:UIApplication = UIApplication.sharedApplication()
-        println("Expiration handler called: \(self.bgTaskId)")
-        let oldTaksId = self.bgTaskId
-        self.bgTaskId = application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
-        
-        if (self.bgTaskId == UIBackgroundTaskInvalid){
-            println("Cannot launch bg task any more")
-        } else {
-            println("New bg task id : \(self.bgTaskId)")
-        }
-        if (oldTaksId != UIBackgroundTaskInvalid) {
-            println("Terminate old bg task \(oldTaksId)")
-            application.endBackgroundTask(self.bgTaskId)
-        }
-    }
+//    func applicationDidEnterBackground(application: UIApplication) {
+//        println("Did enter background: \(self.bgTaskId)")
+//        if (self.bgTaskId == UIBackgroundTaskInvalid){
+//            self.bgTaskId = application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
+//            println("New bg task id : \(self.bgTaskId)")
+//        }
+//        //dispatch_async(self.backgroundQueue, myBackgroundTask)
+//    }
+//    
+//
+//    func myBackgroundTask() {
+//        // this is not elegant but works for now...
+//        NSThread.sleepForTimeInterval(30.0)
+//        println("this is back ground task")
+//        var time = UIApplication.sharedApplication().backgroundTimeRemaining
+//        println(String(format: "Time remaining: %.3f sec" ,time))
+//        dispatch_async(self.backgroundQueue, myBackgroundTask)
+//    }
+//    
+//    func myExpiratonHandler(){
+//        let application:UIApplication = UIApplication.sharedApplication()
+//        println("Expiration handler called: \(self.bgTaskId)")
+//        let oldTaksId = self.bgTaskId
+//        self.bgTaskId = application.beginBackgroundTaskWithName("myBgTask", expirationHandler: myExpiratonHandler)
+//        
+//        if (self.bgTaskId == UIBackgroundTaskInvalid){
+//            println("Cannot launch bg task any more")
+//        } else {
+//            println("New bg task id : \(self.bgTaskId)")
+//        }
+//        if (oldTaksId != UIBackgroundTaskInvalid) {
+//            println("Terminate old bg task \(oldTaksId)")
+//            application.endBackgroundTask(self.bgTaskId)
+//        }
+//    }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        application.endBackgroundTask(self.bgTaskId)
-        self.bgTaskId = UIBackgroundTaskInvalid
+//        application.endBackgroundTask(self.bgTaskId)
+//        self.bgTaskId = UIBackgroundTaskInvalid
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         // wonder if this is necessary...
-        application.endBackgroundTask(self.bgTaskId)
+        //application.endBackgroundTask(self.bgTaskId)
     }
 
     func applicationWillTerminate(application: UIApplication) {
