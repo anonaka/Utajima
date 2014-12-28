@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>99EAC2A1-4994-4659-A1DD-07F0FF27A4E6</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Utajima</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>FD717358F211755CDF913A15D7A55155CBFDA58F</key>
+		<string>https://github.com/anonaka/Utajima.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Utajima.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>FD717358F211755CDF913A15D7A55155CBFDA58F</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/anonaka/Utajima.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>FD717358F211755CDF913A15D7A55155CBFDA58F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FD717358F211755CDF913A15D7A55155CBFDA58F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Utajima</string>
+		</dict>
+	</array>
+</dict>
+</plist>
