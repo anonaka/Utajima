@@ -179,7 +179,13 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     }
     
     @IBAction func doPlay(sender: AnyObject) {
-        self.utajimaModel.play()
+        if self.utajimaModel.myPlayer?.playState == UtajimaPlayer.PlayState.Stopped {
+            self.utajimaModel.play()
+        } else if self.utajimaModel.myPlayer?.playState == UtajimaPlayer.PlayState.Paused {
+            self.utajimaModel.myPlayer?.resume()
+        } else {
+            self.utajimaModel.myPlayer?.pause()
+        }
     }
     
     @IBAction func DoFF(sender: AnyObject) {
