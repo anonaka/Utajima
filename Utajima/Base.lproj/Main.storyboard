@@ -17,17 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f4C-Gt-F3d">
-                                <rect key="frame" x="0.0" y="548" width="600" height="44"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <barButtonItem title="REW" systemItem="rewind" id="mWt-Gp-0AQ"/>
-                                    <barButtonItem systemItem="play" id="FfW-jZ-phd"/>
-                                    <barButtonItem title="FF" systemItem="fastForward" id="yMa-rj-LkM"/>
-                                </items>
-                            </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="tableView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NNd-7h-6UP">
-                                <rect key="frame" x="16" y="191" width="568" height="300"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="tableView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NNd-7h-6UP">
+                                <rect key="frame" x="0.0" y="72" width="600" height="434"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="dNM-nE-hS9" style="IBUITableViewCellStyleDefault" id="xFp-lL-E8b">
@@ -47,6 +38,29 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="f4C-Gt-F3d">
+                                <rect key="frame" x="0.0" y="548" width="600" height="44"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <barButtonItem title="REW" width="50" systemItem="rewind" id="mWt-Gp-0AQ">
+                                        <connections>
+                                            <action selector="doRewind:" destination="Uug-d1-SAX" id="tTp-PF-IXN"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="8C3-Rx-5cF"/>
+                                    <barButtonItem systemItem="play" id="FfW-jZ-phd">
+                                        <connections>
+                                            <action selector="doPlay:" destination="Uug-d1-SAX" id="ECd-to-UjP"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="x6E-mg-xFD"/>
+                                    <barButtonItem title="FF" systemItem="fastForward" id="yMa-rj-LkM">
+                                        <connections>
+                                            <action selector="DoFF:" destination="Uug-d1-SAX" id="NDa-PD-4Lr"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -68,11 +82,12 @@
                     <navigationItem key="navigationItem" id="GqN-Lb-HqX">
                         <barButtonItem key="leftBarButtonItem" title="Item" systemItem="add" id="09B-Ql-IUE">
                             <connections>
-                                <action selector="addSongsToPlaybackQueue:" destination="Uug-d1-SAX" id="yp9-je-0GK"/>
+                                <action selector="addSongsToPlaybackQueue:" destination="Uug-d1-SAX" id="GQK-gj-X5d"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="RewindButton" destination="mWt-Gp-0AQ" id="V6g-cZ-Hyt"/>
                         <outlet property="addSongButton" destination="09B-Ql-IUE" id="MmP-vn-fjy"/>
                         <outlet property="tableView" destination="NNd-7h-6UP" id="Z6u-Lg-pfO"/>
                     </connections>

@@ -11,8 +11,12 @@ import MediaPlayer
 
 class UtajimaListTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MPMediaPickerControllerDelegate {
     
+    @IBOutlet weak var PlayButton: UIBarButtonItem!
+    @IBOutlet weak var FastforwardButton: UIBarButtonItem!
+    @IBOutlet weak var RewindButton: UIBarButtonItem!
     @IBOutlet weak var addSongButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
+    
     var utajimaModel: UtajimaModel!  = nil
     let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
     	
@@ -170,30 +174,15 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
             return true
         }
     }
-   
-    
-    // Build Footer
-    //TODO refacter these !!
-    let footerHeight:CGFloat = CGFloat(70.0)
-    var utajimaControllerView: UIView? = nil;
-    
-    
-    func addFooter(){
-        let appDelegate:UIApplicationDelegate? = UIApplication.sharedApplication().delegate
-        let footerFrame:CGRect = CGRect(
-            x: 0.0,
-            //y: self.tableView.frame.height - self.footerHeight,
-            y: UIScreen.mainScreen().bounds.height - self.footerHeight,
-            width: UIScreen.mainScreen().bounds.width,
-            height: self.footerHeight)
-        self.utajimaControllerView = UIView(frame: footerFrame)
-        self.utajimaControllerView!.backgroundColor =  UIColor.redColor()
-        appDelegate?.window??.addSubview(self.utajimaControllerView!)
-        //self.tableView.tableFooterView = footer
+       
+    @IBAction func doRewind(sender: AnyObject) {
     }
     
-    func hideController(mode:Bool){
-        self.utajimaControllerView!.hidden = mode
+    @IBAction func doPlay(sender: AnyObject) {
+        self.utajimaModel.play()
+    }
+    
+    @IBAction func DoFF(sender: AnyObject) {
     }
 
 }
