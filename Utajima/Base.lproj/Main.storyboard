@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="d5h-GO-fqT">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Utajima List Table View Controller-->
@@ -17,28 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="tableView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NNd-7h-6UP">
-                                <rect key="frame" x="0.0" y="72" width="600" height="434"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="dNM-nE-hS9" style="IBUITableViewCellStyleDefault" id="xFp-lL-E8b">
-                                        <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xFp-lL-E8b" id="tkF-0N-Wdk">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dNM-nE-hS9">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="f4C-Gt-F3d">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="f4C-Gt-F3d">
                                 <rect key="frame" x="0.0" y="548" width="600" height="44"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
@@ -61,23 +39,37 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="tableView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NNd-7h-6UP">
+                                <rect key="frame" x="0.0" y="107" width="600" height="434"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="dNM-nE-hS9" style="IBUITableViewCellStyleDefault" id="xFp-lL-E8b">
+                                        <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xFp-lL-E8b" id="tkF-0N-Wdk">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dNM-nE-hS9">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="f4C-Gt-F3d" firstAttribute="leading" secondItem="TJe-jd-sxN" secondAttribute="leadingMargin" constant="10" id="0qA-vt-oxn"/>
-                            <constraint firstItem="f4C-Gt-F3d" firstAttribute="leading" secondItem="TJe-jd-sxN" secondAttribute="leading" id="71B-ak-3cW"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="f4C-Gt-F3d" secondAttribute="trailing" constant="10" id="83y-mq-urp"/>
-                            <constraint firstAttribute="trailing" secondItem="f4C-Gt-F3d" secondAttribute="trailing" id="DqT-5M-3MA"/>
-                            <constraint firstItem="g7r-iB-8OQ" firstAttribute="top" secondItem="f4C-Gt-F3d" secondAttribute="bottom" constant="10" id="I2x-Ju-IFM"/>
-                            <constraint firstItem="g7r-iB-8OQ" firstAttribute="top" secondItem="f4C-Gt-F3d" secondAttribute="bottom" constant="8" id="aMF-YD-m95"/>
+                            <constraint firstItem="g7r-iB-8OQ" firstAttribute="top" secondItem="f4C-Gt-F3d" secondAttribute="bottom" id="6l6-XN-pl1"/>
+                            <constraint firstItem="f4C-Gt-F3d" firstAttribute="top" secondItem="NNd-7h-6UP" secondAttribute="bottom" constant="5" id="DJu-I8-wki"/>
+                            <constraint firstItem="f4C-Gt-F3d" firstAttribute="leading" secondItem="TJe-jd-sxN" secondAttribute="leading" id="Gzf-mA-dmz"/>
+                            <constraint firstAttribute="trailing" secondItem="f4C-Gt-F3d" secondAttribute="trailing" id="RfT-2s-F55"/>
+                            <constraint firstItem="f4C-Gt-F3d" firstAttribute="trailing" secondItem="NNd-7h-6UP" secondAttribute="trailing" id="Uil-tG-y06"/>
+                            <constraint firstItem="f4C-Gt-F3d" firstAttribute="leading" secondItem="NNd-7h-6UP" secondAttribute="leading" id="cuL-OS-bRK"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="0qA-vt-oxn"/>
-                                <exclude reference="83y-mq-urp"/>
-                                <exclude reference="I2x-Ju-IFM"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="GqN-Lb-HqX">
                         <barButtonItem key="leftBarButtonItem" title="Item" systemItem="add" id="09B-Ql-IUE">
