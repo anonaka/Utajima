@@ -194,5 +194,9 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     @IBAction func DoFF(sender: AnyObject) {
         self.model.fastForward()
     }
+    
+    func updatePlayPauseButton(){
+        //TODO update button icon here
+    }
 
 }
