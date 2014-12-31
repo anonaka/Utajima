@@ -27,26 +27,10 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
-//        
-//        var tap = UITapGestureRecognizer(target: self, action: "respondToTap:")
-//        tap.numberOfTapsRequired = 2
-//        self.view.addGestureRecognizer(tap)
-//        
-//        // add swipe action
-//        var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
-//        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-//        self.view.addGestureRecognizer(swipeRight)
-//        
-//        var swipeDown = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
-//        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
-//        self.view.addGestureRecognizer(swipeDown)
-//
+
         self.myMediaPicker.allowsPickingMultipleItems = true
         self.myMediaPicker.delegate = self
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
@@ -88,12 +72,11 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         didPickMediaItems mediaItemCollection: MPMediaItemCollection!){
         mediaPicker.dismissViewControllerAnimated(true, completion: nil)
         self.model.addSongToPlaybackQueue(mediaItemCollection)
-        //self.hideController(false)
         return
     }
     
-    func mediaPickerDidCancel(){
-         println("music pickup cancelled")
+    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController!) {
+        mediaPicker.dismissViewControllerAnimated(true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -134,10 +117,6 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
     }
-    
-//    func tebleView(tableView: UITableView, didEnterEditMode ){
-//        
-//    }
     
     func respondToTap(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
