@@ -101,9 +101,10 @@ class UtajimaModel: NSObject {
     }
     
     func playDone(){
-        self.musicCollection.removeAtIndex(0)
+        if !self.musicCollection.isEmpty {
+            self.musicCollection.removeAtIndex(0)
+        }
         self.viewController.tableView.reloadData()
-        println("play next song")
         self.play()
     }
 }
