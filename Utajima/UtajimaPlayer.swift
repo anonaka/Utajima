@@ -37,6 +37,7 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
         self.avPlayer!.play()
     }
     
+
     func stop(){
         self.avPlayer!.stop()
         self.avPlayer = nil

@@ -27,20 +27,20 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        
-        var tap = UITapGestureRecognizer(target: self, action: "respondToTap:")
-        tap.numberOfTapsRequired = 2
-        self.view.addGestureRecognizer(tap)
-        
-        // add swipe action
-        var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
-        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-        self.view.addGestureRecognizer(swipeRight)
-        
-        var swipeDown = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
-        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
-        self.view.addGestureRecognizer(swipeDown)
-
+//        
+//        var tap = UITapGestureRecognizer(target: self, action: "respondToTap:")
+//        tap.numberOfTapsRequired = 2
+//        self.view.addGestureRecognizer(tap)
+//        
+//        // add swipe action
+//        var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+//        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+//        self.view.addGestureRecognizer(swipeRight)
+//        
+//        var swipeDown = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+//        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
+//        self.view.addGestureRecognizer(swipeDown)
+//
         self.myMediaPicker.allowsPickingMultipleItems = true
         self.myMediaPicker.delegate = self
         
@@ -50,8 +50,28 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    
+    override func setEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated:animated)
+        self.tableView.setEditing(editing, animated: animated)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        //TODO check if I can write this one line
+        if self.tableView.indexPathForSelectedRow() != nil {
+            self.tableView.deselectRowAtIndexPath(self.tableView.indexPathForSelectedRow()!, animated:animated)
+        }
+    }
 
-
+    override func viewDidAppear(animated: Bool) {
+        tableView.flashScrollIndicators()
+    }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        tableView.flashScrollIndicators()
+    }
+    
     @IBAction func play(sender: AnyObject) {
     }
     
@@ -115,9 +135,13 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
     }
     
+//    func tebleView(tableView: UITableView, didEnterEditMode ){
+//        
+//    }
+    
     func respondToTap(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
-            self.model.play()
+            //self.model.play()
         }
     }
  
