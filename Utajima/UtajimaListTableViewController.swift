@@ -17,13 +17,13 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     @IBOutlet weak var addSongButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
-    var utajimaModel: UtajimaModel!  = nil
+    var model:UtajimaModel!  = nil
     let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
     	
     override func viewDidLoad() {
         super.viewDidLoad()       
         //self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        self.utajimaModel = UtajimaModel(viewController: self)
+        self.model = UtajimaModel(viewController: self)
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -59,8 +59,6 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         self.runMediaPicker()
     }
     
-    
-    
     func runMediaPicker() {
         //self.hideController(true)
         self.presentViewController(self.myMediaPicker, animated: true, completion: nil)
@@ -69,7 +67,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     func mediaPicker(mediaPicker: MPMediaPickerController!,
         didPickMediaItems mediaItemCollection: MPMediaItemCollection!){
         mediaPicker.dismissViewControllerAnimated(true, completion: nil)
-        self.utajimaModel.addSongToPlaybackQueue(mediaItemCollection)
+        self.model.addSongToPlaybackQueue(mediaItemCollection)
         //self.hideController(false)
         return
     }
@@ -94,16 +92,16 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return self.utajimaModel.getMusicsCount()
+        return self.model.getMusicsCount()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
 
         // Configure the cell...
-        cell.textLabel?.text = self.utajimaModel.getTitleAt(indexPath.row)
-        cell.detailTextLabel?.text = self.utajimaModel.getAlbumTitleAt(indexPath.row)
-        var image:UIImage? = self.utajimaModel.getArtworkAt(indexPath.row)?.imageWithSize(CGSizeMake(80.0,80.0))
+        cell.textLabel?.text = self.model.getTitleAt(indexPath.row)
+        cell.detailTextLabel?.text = self.model.getAlbumTitleAt(indexPath.row)
+        var image:UIImage? = self.model.getArtworkAt(indexPath.row)?.imageWithSize(CGSizeMake(80.0,80.0))
         cell.imageView?.image = image
         return cell
     }
@@ -119,7 +117,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     
     func respondToTap(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
-            self.utajimaModel.play()
+            self.model.play()
         }
     }
  
@@ -151,7 +149,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // must update the model before update view
-            self.utajimaModel.removePlaybackQueueAtIndex(indexPath.row)
+            self.model.removePlaybackQueueAtIndex(indexPath.row)
             // Delete the row from the data source
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
 
@@ -162,7 +160,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
 
     // Override to support rearranging the table view.
     func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-        self.utajimaModel.movePlaybackQueue(fromIndexPath.row, to: toIndexPath.row)
+        self.model.movePlaybackQueue(fromIndexPath.row, to: toIndexPath.row)
     }
 
     // Override to support conditional rearranging of the table view.
@@ -176,21 +174,25 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     }
        
     @IBAction func doRewind(sender: AnyObject) {
-        self.utajimaModel.rewind()
+        self.model.rewind()
     }
     
     @IBAction func doPlay(sender: AnyObject) {
-        if self.utajimaModel.myPlayer?.playState == UtajimaPlayer.PlayState.Stopped {
-            self.utajimaModel.play()
-        } else if self.utajimaModel.myPlayer?.playState == UtajimaPlayer.PlayState.Paused {
-            self.utajimaModel.myPlayer?.resume()
-        } else {
-            self.utajimaModel.myPlayer?.pause()
+        switch self.model.playState {
+        case .Stopped:
+            self.model.play()
+        case .Paused:
+            self.model.resume()
+        case .Playing:
+            self.model.pause()
+        default:
+            println("state error")
+            //TODO must thorow exception here
         }
     }
     
     @IBAction func DoFF(sender: AnyObject) {
-        self.utajimaModel.fastForward()
+        self.model.fastForward()
     }
 
 }

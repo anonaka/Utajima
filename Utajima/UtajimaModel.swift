@@ -71,12 +71,18 @@ class UtajimaModel: NSObject {
         }
     }
     
+    func pause(){
+        self.myPlayer!.pause()
+        self.playState = .Paused
+    }
+    
     func resume(){
         if self.playState != .Paused {
             println("State transition error")
             // must throw exception here
         } else {
             self.myPlayer!.resume()
+            self.playState = .Playing
         }
     }
     
@@ -91,6 +97,7 @@ class UtajimaModel: NSObject {
     
     func stop(){
         self.myPlayer!.stop()
+        self.playState = .Stopped
     }
     
     func playDone(){

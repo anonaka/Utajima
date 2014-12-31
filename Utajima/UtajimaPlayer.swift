@@ -11,8 +11,6 @@ import MediaPlayer
 import AVFoundation
 
 class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
-    enum PlayState { case Stopped, Playing, Paused }
-    var playState:PlayState = .Stopped
 
     var model:UtajimaModel! = nil
     var avPlayer:AVAudioPlayer? = nil
