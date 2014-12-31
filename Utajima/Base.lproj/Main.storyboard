@@ -39,11 +39,11 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="tableView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NNd-7h-6UP">
-                                <rect key="frame" x="0.0" y="107" width="600" height="444"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="tableView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NNd-7h-6UP">
+                                <rect key="frame" x="0.0" y="79" width="600" height="477"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="dNM-nE-hS9" style="IBUITableViewCellStyleDefault" id="xFp-lL-E8b">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="dNM-nE-hS9" detailTextLabel="PfB-xD-kUS" style="IBUITableViewCellStyleSubtitle" id="xFp-lL-E8b">
                                         <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xFp-lL-E8b" id="tkF-0N-Wdk">
@@ -52,6 +52,12 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dNM-nE-hS9">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PfB-xD-kUS">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -69,7 +75,7 @@
                             <constraint firstAttribute="trailing" secondItem="f4C-Gt-F3d" secondAttribute="trailing" id="RfT-2s-F55"/>
                             <constraint firstItem="f4C-Gt-F3d" firstAttribute="trailing" secondItem="NNd-7h-6UP" secondAttribute="trailing" id="Uil-tG-y06"/>
                             <constraint firstItem="f4C-Gt-F3d" firstAttribute="leading" secondItem="NNd-7h-6UP" secondAttribute="leading" id="cuL-OS-bRK"/>
-                            <constraint firstItem="NNd-7h-6UP" firstAttribute="top" secondItem="K5g-hR-a6R" secondAttribute="bottom" constant="43" id="mtP-WN-9ol"/>
+                            <constraint firstItem="NNd-7h-6UP" firstAttribute="top" secondItem="K5g-hR-a6R" secondAttribute="bottom" constant="10" id="mtP-WN-9ol"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="GqN-Lb-HqX">
