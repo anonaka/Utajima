@@ -10,7 +10,8 @@ import UIKit
 import MediaPlayer
 
 class UtajimaModel: NSObject {
-    
+    enum PlayState { case Stopped, Playing, Paused }
+    var playState:PlayState = .Stopped
     var viewController:UtajimaListTableViewController! = nil
     var musicCollection: [AnyObject] = []
     var myPlayer:UtajimaPlayer? = nil
@@ -53,6 +54,7 @@ class UtajimaModel: NSObject {
         self.musicCollection.removeAtIndex(index)
     }
     
+    
     func movePlaybackQueue(from:Int,to:Int){
         let tmpobj:AnyObject = self.musicCollection[from]
         self.musicCollection.removeAtIndex(from)
@@ -60,7 +62,35 @@ class UtajimaModel: NSObject {
     }
     
     func play(){
-        self.myPlayer?.play1st()
+        if self.musicCollection.isEmpty == true {
+            self.playState = .Stopped
+        } else {
+            let song:AnyObject = self.musicCollection[0]
+            self.myPlayer!.play(song)
+            self.playState = .Playing
+        }
+    }
+    
+    func resume(){
+        if self.playState != .Paused {
+            println("State transition error")
+            // must throw exception here
+        } else {
+            self.myPlayer!.resume()
+        }
+    }
+    
+    func fastForward(){
+        self.stop()
+        self.playDone()
+    }
+    
+    func rewind(){
+        self.play()
+    }
+    
+    func stop(){
+        self.myPlayer!.stop()
     }
     
     func playDone(){

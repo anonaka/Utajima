@@ -176,6 +176,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     }
        
     @IBAction func doRewind(sender: AnyObject) {
+        self.utajimaModel.rewind()
     }
     
     @IBAction func doPlay(sender: AnyObject) {
@@ -189,6 +190,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     }
     
     @IBAction func DoFF(sender: AnyObject) {
+        self.utajimaModel.fastForward()
     }
 
 }
