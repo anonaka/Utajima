@@ -16,11 +16,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="f4C-Gt-F3d">
-                                <rect key="frame" x="0.0" y="548" width="600" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="f4C-Gt-F3d">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
-                                    <barButtonItem title="REW" width="50" systemItem="rewind" id="mWt-Gp-0AQ">
+                                    <barButtonItem systemItem="rewind" id="mWt-Gp-0AQ">
                                         <connections>
                                             <action selector="doRewind:" destination="Uug-d1-SAX" id="tTp-PF-IXN"/>
                                         </connections>
@@ -32,15 +32,15 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem systemItem="flexibleSpace" id="x6E-mg-xFD"/>
-                                    <barButtonItem title="FF" systemItem="fastForward" id="yMa-rj-LkM">
+                                    <barButtonItem systemItem="fastForward" id="yMa-rj-LkM">
                                         <connections>
                                             <action selector="DoFF:" destination="Uug-d1-SAX" id="NDa-PD-4Lr"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="tableView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NNd-7h-6UP">
-                                <rect key="frame" x="0.0" y="107" width="600" height="434"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="tableView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NNd-7h-6UP">
+                                <rect key="frame" x="0.0" y="107" width="600" height="444"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="dNM-nE-hS9" style="IBUITableViewCellStyleDefault" id="xFp-lL-E8b">
@@ -69,10 +69,11 @@
                             <constraint firstAttribute="trailing" secondItem="f4C-Gt-F3d" secondAttribute="trailing" id="RfT-2s-F55"/>
                             <constraint firstItem="f4C-Gt-F3d" firstAttribute="trailing" secondItem="NNd-7h-6UP" secondAttribute="trailing" id="Uil-tG-y06"/>
                             <constraint firstItem="f4C-Gt-F3d" firstAttribute="leading" secondItem="NNd-7h-6UP" secondAttribute="leading" id="cuL-OS-bRK"/>
+                            <constraint firstItem="NNd-7h-6UP" firstAttribute="top" secondItem="K5g-hR-a6R" secondAttribute="bottom" constant="43" id="mtP-WN-9ol"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="GqN-Lb-HqX">
-                        <barButtonItem key="leftBarButtonItem" title="Item" systemItem="add" id="09B-Ql-IUE">
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="09B-Ql-IUE">
                             <connections>
                                 <action selector="addSongsToPlaybackQueue:" destination="Uug-d1-SAX" id="GQK-gj-X5d"/>
                             </connections>
