@@ -26,7 +26,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem systemItem="flexibleSpace" id="8C3-Rx-5cF"/>
-                                    <barButtonItem systemItem="play" id="FfW-jZ-phd">
+                                    <barButtonItem systemItem="play" id="FfW-jZ-phd" userLabel="PlayPause">
                                         <connections>
                                             <action selector="doPlay:" destination="Uug-d1-SAX" id="ECd-to-UjP"/>
                                         </connections>
@@ -86,8 +86,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="PlayPauseButton" destination="FfW-jZ-phd" id="94R-ip-ryd"/>
                         <outlet property="RewindButton" destination="mWt-Gp-0AQ" id="V6g-cZ-Hyt"/>
                         <outlet property="addSongButton" destination="09B-Ql-IUE" id="MmP-vn-fjy"/>
+                        <outlet property="fastforwardButton" destination="yMa-rj-LkM" id="AEj-pg-6gJ"/>
+                        <outlet property="playPauseButton" destination="FfW-jZ-phd" id="xMJ-g8-cw2"/>
+                        <outlet property="rewindButton" destination="mWt-Gp-0AQ" id="PiV-zW-UZJ"/>
                         <outlet property="tableView" destination="NNd-7h-6UP" id="Z6u-Lg-pfO"/>
                     </connections>
                 </viewController>

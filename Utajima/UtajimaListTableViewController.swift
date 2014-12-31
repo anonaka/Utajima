@@ -11,18 +11,25 @@ import MediaPlayer
 
 class UtajimaListTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MPMediaPickerControllerDelegate {
     
-    @IBOutlet weak var PlayButton: UIBarButtonItem!
-    @IBOutlet weak var FastforwardButton: UIBarButtonItem!
-    @IBOutlet weak var RewindButton: UIBarButtonItem!
+    @IBOutlet weak var playPauseButton: UIBarButtonItem!
+    @IBOutlet weak var fastforwardButton: UIBarButtonItem!
+    @IBOutlet weak var rewindButton: UIBarButtonItem!
     @IBOutlet weak var addSongButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
-    
+
+    var playButton:UIBarButtonItem? = nil
+    var pauseButton:UIBarButtonItem? = nil
+
     var model:UtajimaModel!  = nil
     let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
-    	
+    
+    func initButtons(){
+        self.playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Play, target: self, action: Selector("doPlay:"))
+        self.pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Pause, target:self, action: Selector("doPlay:"))
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()       
-        //self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         self.model = UtajimaModel(viewController: self)
         
         self.tableView.dataSource = self
@@ -33,6 +40,9 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        self.initButtons()
+        self.playPauseButton = self.pauseButton
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
@@ -184,6 +194,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         switch self.model.playState {
         case .Stopped:
             self.model.play()
+            self.playPauseButton = self.pauseButton
         case .Paused:
             self.model.resume()
         case .Playing:
