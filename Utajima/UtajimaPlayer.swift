@@ -11,42 +11,44 @@ import MediaPlayer
 import AVFoundation
 
 class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
-    var model:UtajimaModel! = nil
-    var avPlayer:AVAudioPlayer? = nil
-    var audioSession:AVAudioSession = AVAudioSession.sharedInstance()
-    var error: NSErrorPointer = NSErrorPointer()
+
+    private var model:UtajimaModel! = nil
+    private var avPlayer:AVAudioPlayer? = nil
+    private var audioSession:AVAudioSession = AVAudioSession.sharedInstance()
+    private var error: NSErrorPointer = NSErrorPointer()
     
     init(model:UtajimaModel){
         super.init()
         self.model = model
         self.setAudioSession()
         UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
-   }
-    
-    func statusChanged(notification: NSNotification?){
-    }
-
-    func get1stSong() -> AnyObject?{
-        if self.model.musicCollection.isEmpty == false {
-            return self.model.musicCollection[0]
-        } else {
-            return nil
-        }
     }
     
-    func play1st(){
-        var song : AnyObject? = self.get1stSong()
-        if song == nil {return}
-        let url:NSURL = song?.valueForProperty(MPMediaItemPropertyAssetURL) as NSURL
+    private func setAudioSession(){
+        self.audioSession.setCategory(AVAudioSessionCategoryPlayback, error: self.error)
+        self.audioSession.setActive(true, error: self.error)
+    }
+    
+    func play(song:AnyObject){
+        let url:NSURL = song.valueForProperty(MPMediaItemPropertyAssetURL) as NSURL
         self.avPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
         self.avPlayer!.delegate = self
         println("Duration: \(self.avPlayer!.duration)")
         self.avPlayer!.play()
     }
     
-    func setAudioSession(){
-        self.audioSession.setCategory(AVAudioSessionCategoryPlayback, error: self.error)
-        self.audioSession.setActive(true, error: self.error)
+
+    func stop(){
+        self.avPlayer?.stop()
+        self.avPlayer = nil
+    }
+    
+    func pause(){
+        self.avPlayer!.pause()
+    }
+    
+    func resume(){
+        self.avPlayer!.play()
     }
     
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {

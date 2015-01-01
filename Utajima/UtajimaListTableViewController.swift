@@ -9,43 +9,73 @@
 import UIKit
 import MediaPlayer
 
-class UtajimaListTableViewController: UITableViewController, MPMediaPickerControllerDelegate{
+class UtajimaListTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MPMediaPickerControllerDelegate {
     
-    @IBOutlet weak var AddSongButton: UIBarButtonItem!
-    var utajimaModel: UtajimaModel!  = nil
+    @IBOutlet weak var playPauseButton: UIBarButtonItem!
+    @IBOutlet weak var fastforwardButton: UIBarButtonItem!
+    @IBOutlet weak var rewindButton: UIBarButtonItem!
+    @IBOutlet weak var addSongButton: UIBarButtonItem!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var controllerBar: UIToolbar!
+    
+    var playButton:UIBarButtonItem? = nil
+    var pauseButton:UIBarButtonItem? = nil
+
+    var model:UtajimaModel!  = nil
     let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
-    	
+    
+    func initButtons(){
+        self.playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Play, target: self, action: Selector("doPlay:"))
+        self.pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Pause, target:self, action: Selector("doPlay:"))
+        self.updatePlayPauseButton()
+    }
+    
+    func updatePlayPauseButton(){
+        let PlayPauseButtonOffset:Int = 2
+        if self.model.playState == .Playing {
+            self.controllerBar.items![PlayPauseButtonOffset] = self.pauseButton!
+        } else {
+            self.controllerBar.items![PlayPauseButtonOffset] = self.playButton!
+        }
+    }
+   
     override func viewDidLoad() {
         super.viewDidLoad()       
-        //self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        self.utajimaModel = UtajimaModel(viewController: self)
-
-        var tap = UITapGestureRecognizer(target: self, action: "respondToTap:")
-        tap.numberOfTapsRequired = 2
-        self.view.addGestureRecognizer(tap)
+        self.model = UtajimaModel(viewController: self)
         
-        // add swipe action
-        var swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
-        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-        self.view.addGestureRecognizer(swipeRight)
-        
-        var swipeDown = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
-        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
-        self.view.addGestureRecognizer(swipeDown)
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
 
         self.myMediaPicker.allowsPickingMultipleItems = true
         self.myMediaPicker.delegate = self
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        self.addFooter()
+        self.initButtons()
+    }
+    
+    override func setEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated:animated)
+        self.tableView.setEditing(editing, animated: animated)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        //TODO check if I can write this one line
+        if self.tableView.indexPathForSelectedRow() != nil {
+            self.tableView.deselectRowAtIndexPath(self.tableView.indexPathForSelectedRow()!, animated:animated)
+        }
     }
 
-
+    override func viewDidAppear(animated: Bool) {
+        tableView.flashScrollIndicators()
+    }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        tableView.flashScrollIndicators()
+    }
+    
     @IBAction func play(sender: AnyObject) {
     }
     
@@ -54,20 +84,19 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
     }
     
     func runMediaPicker() {
-        self.hideController(true)
+        //self.hideController(true)
         self.presentViewController(self.myMediaPicker, animated: true, completion: nil)
     }
     
     func mediaPicker(mediaPicker: MPMediaPickerController!,
         didPickMediaItems mediaItemCollection: MPMediaItemCollection!){
         mediaPicker.dismissViewControllerAnimated(true, completion: nil)
-        self.utajimaModel.addSongToPlaybackQueue(mediaItemCollection)
-        self.hideController(false)
+        self.model.addSongToPlaybackQueue(mediaItemCollection)
         return
     }
     
-    func mediaPickerDidCancel(){
-         println("music pickup cancelled")
+    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController!) {
+        mediaPicker.dismissViewControllerAnimated(true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -77,25 +106,25 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return self.utajimaModel.getMusicsCount()
+        return self.model.getMusicsCount()
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
 
         // Configure the cell...
-        cell.textLabel?.text = self.utajimaModel.getTitleAt(indexPath.row)
-        cell.detailTextLabel?.text = self.utajimaModel.getAlbumTitleAt(indexPath.row)
-        var image:UIImage? = self.utajimaModel.getArtworkAt(indexPath.row)?.imageWithSize(CGSizeMake(80.0,80.0))
+        cell.textLabel?.text = self.model.getTitleAt(indexPath.row)
+        cell.detailTextLabel?.text = self.model.getAlbumTitleAt(indexPath.row)
+        var image:UIImage? = self.model.getArtworkAt(indexPath.row)?.imageWithSize(CGSizeMake(80.0,80.0))
         cell.imageView?.image = image
         return cell
     }
@@ -106,12 +135,12 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
         }
     }
         
-    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
     }
     
     func respondToTap(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
-            self.utajimaModel.play()
+            //self.model.play()
         }
     }
  
@@ -130,7 +159,7 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
     }
     
     // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return NO if you do not want the specified item to be editable.
         if indexPath.row == 0 {
             return false
@@ -140,10 +169,10 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
     }
     
     //Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // must update the model before update view
-            self.utajimaModel.removePlaybackQueueAtIndex(indexPath.row)
+            self.model.removePlaybackQueueAtIndex(indexPath.row)
             // Delete the row from the data source
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
 
@@ -153,12 +182,12 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
     }
 
     // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-        self.utajimaModel.movePlaybackQueue(fromIndexPath.row, to: toIndexPath.row)
+    func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+        self.model.movePlaybackQueue(fromIndexPath.row, to: toIndexPath.row)
     }
 
     // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return NO if you do not want the item to be re-orderable.
         if indexPath.row == 0 {
             return false
@@ -166,54 +195,28 @@ class UtajimaListTableViewController: UITableViewController, MPMediaPickerContro
             return true
         }
     }
-   
-    
-    // Build Footer
-    //TODO refacter these !!
-    let footerHeight:CGFloat = CGFloat(70.0)
-    var utajimaControllerView: UIView? = nil;
-    
-//    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return self.footerHeight
-//    }
-//    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let footerFrame:CGRect = CGRect(
-//            x: 0.0,
-//            y: tableView.frame.height - footerHeight,
-//            width: tableView.frame.width,
-//            height: self.footerHeight)
-//        let footerView:UIView = UIView(frame: footerFrame)
-//        footerView.backgroundColor = UIColor.darkGrayColor()
-//        return footerView
-//    }
-
-    
-    func addFooter(){
-        let appDelegate:UIApplicationDelegate? = UIApplication.sharedApplication().delegate
-        let footerFrame:CGRect = CGRect(
-            x: 0.0,
-            //y: self.tableView.frame.height - self.footerHeight,
-            y: UIScreen.mainScreen().bounds.height - self.footerHeight,
-            width: UIScreen.mainScreen().bounds.width,
-            height: self.footerHeight)
-        self.utajimaControllerView = UIView(frame: footerFrame)
-        self.utajimaControllerView!.backgroundColor =  UIColor.redColor()
-        appDelegate?.window??.addSubview(self.utajimaControllerView!)
-        //self.tableView.tableFooterView = footer
+       
+    @IBAction func doRewind(sender: AnyObject) {
+        self.model.rewind()
     }
     
-    func hideController(mode:Bool){
-        self.utajimaControllerView!.hidden = mode
+    @IBAction func doPlay(sender: AnyObject) {
+        switch self.model.playState {
+        case .Stopped:
+            self.model.play()
+            self.playPauseButton = self.pauseButton
+        case .Paused:
+            self.model.resume()
+        case .Playing:
+            self.model.pause()
+        default:
+            println("state error")
+            //TODO must thorow exception here
+        }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    @IBAction func DoFF(sender: AnyObject) {
+        self.model.fastForward()
     }
-    */
 
 }
