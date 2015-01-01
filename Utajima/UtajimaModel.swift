@@ -69,11 +69,13 @@ class UtajimaModel: NSObject {
             self.myPlayer!.play(song)
             self.playState = .Playing
         }
+        self.viewController.updatePlayPauseButton()
     }
     
     func pause(){
         self.myPlayer!.pause()
         self.playState = .Paused
+        self.viewController.updatePlayPauseButton()
     }
     
     func resume(){
@@ -84,6 +86,7 @@ class UtajimaModel: NSObject {
             self.myPlayer!.resume()
             self.playState = .Playing
         }
+        self.viewController.updatePlayPauseButton()
     }
     
     func fastForward(){
@@ -98,6 +101,7 @@ class UtajimaModel: NSObject {
     func stop(){
         self.myPlayer!.stop()
         self.playState = .Stopped
+        self.viewController.updatePlayPauseButton()
     }
     
     func playDone(){

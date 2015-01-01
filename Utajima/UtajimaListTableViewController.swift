@@ -16,7 +16,8 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     @IBOutlet weak var rewindButton: UIBarButtonItem!
     @IBOutlet weak var addSongButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
-
+    @IBOutlet weak var controllerBar: UIToolbar!
+    
     var playButton:UIBarButtonItem? = nil
     var pauseButton:UIBarButtonItem? = nil
 
@@ -26,8 +27,18 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     func initButtons(){
         self.playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Play, target: self, action: Selector("doPlay:"))
         self.pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Pause, target:self, action: Selector("doPlay:"))
+        self.updatePlayPauseButton()
     }
     
+    func updatePlayPauseButton(){
+        let PlayPauseButtonOffset:Int = 2
+        if self.model.playState == .Playing {
+            self.controllerBar.items![PlayPauseButtonOffset] = self.pauseButton!
+        } else {
+            self.controllerBar.items![PlayPauseButtonOffset] = self.playButton!
+        }
+    }
+   
     override func viewDidLoad() {
         super.viewDidLoad()       
         self.model = UtajimaModel(viewController: self)
@@ -42,7 +53,6 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.initButtons()
-        self.playPauseButton = self.pauseButton
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
@@ -207,10 +217,6 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     
     @IBAction func DoFF(sender: AnyObject) {
         self.model.fastForward()
-    }
-    
-    func updatePlayPauseButton(){
-        //TODO update button icon here
     }
 
 }

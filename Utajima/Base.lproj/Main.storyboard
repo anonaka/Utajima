@@ -89,6 +89,7 @@
                         <outlet property="PlayPauseButton" destination="FfW-jZ-phd" id="94R-ip-ryd"/>
                         <outlet property="RewindButton" destination="mWt-Gp-0AQ" id="V6g-cZ-Hyt"/>
                         <outlet property="addSongButton" destination="09B-Ql-IUE" id="MmP-vn-fjy"/>
+                        <outlet property="controllerBar" destination="f4C-Gt-F3d" id="9eH-a5-nDW"/>
                         <outlet property="fastforwardButton" destination="yMa-rj-LkM" id="AEj-pg-6gJ"/>
                         <outlet property="playPauseButton" destination="FfW-jZ-phd" id="xMJ-g8-cw2"/>
                         <outlet property="rewindButton" destination="mWt-Gp-0AQ" id="PiV-zW-UZJ"/>
