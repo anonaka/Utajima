@@ -23,6 +23,29 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
 
     var model:UtajimaModel!  = nil
     let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
+
+    override func canBecomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    override func remoteControlReceivedWithEvent(event: UIEvent) {
+        if (event.type == .RemoteControl) {
+            switch (event.subtype) {
+            case .RemoteControlPlay:
+                self.doPlay(self)
+            case .RemoteControlStop:
+                self.doPlay(self)
+            case .RemoteControlPause:
+                self.self.doPlay(self)
+            case .RemoteControlNextTrack:
+                self.DoFF(self)
+            case .RemoteControlPreviousTrack:
+                self.doRewind(self)
+            default:
+                println("Event not handled: \(event.subtype)")
+            }
+        }
+    }
     
     func initButtons(){
         self.playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Play, target: self, action: Selector("doPlay:"))
@@ -53,6 +76,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.initButtons()
+        UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
