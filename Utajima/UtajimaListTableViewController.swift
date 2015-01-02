@@ -41,6 +41,12 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
                 self.DoFF(self)
             case .RemoteControlPreviousTrack:
                 self.doRewind(self)
+            case .RemoteControlTogglePlayPause:
+                self.doPlay(self)
+            case .RemoteControlEndSeekingBackward:
+                self.doRewind(self)
+            case .RemoteControlEndSeekingForward:
+                self.DoFF(self)
             default:
                 println("Event not handled: \(event.subtype)")
             }
