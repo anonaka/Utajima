@@ -48,8 +48,8 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
             case .RemoteControlEndSeekingForward:
                 self.DoFF(self)
             default:
-                println("Event not handled: \(event.subtype)")
-            }
+                println("Event not handled:\(event.subtype.rawValue)")
+             }
         }
     }
     
