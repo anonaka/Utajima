@@ -12,9 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND,0)
     var model : UtajimaModel? = nil
-    var bgTaskId:UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
     
     override init(){
         super.init()

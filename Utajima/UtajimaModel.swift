@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-class UtajimaModel: NSObject {
+class UtajimaModel: UIResponder {
     enum PlayState { case Stopped, Playing, Paused }
     var playState:PlayState = .Stopped
     var viewController:UtajimaListTableViewController! = nil
@@ -24,6 +24,7 @@ class UtajimaModel: NSObject {
         self.viewController = viewController
         self.myPlayer = UtajimaPlayer(model: self)
     }
+    
     
     func getMusicsCount() -> Int {
         //println("music count: \(self.musicCollection.count)")

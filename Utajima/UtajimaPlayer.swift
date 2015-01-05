@@ -21,7 +21,6 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
         super.init()
         self.model = model
         self.setAudioSession()
-        UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
     }
     
     private func setAudioSession(){
