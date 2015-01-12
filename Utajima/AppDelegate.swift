@@ -7,15 +7,39 @@
 //
 
 import UIKit
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var model : UtajimaModel? = nil
-    
+    let nc = NSNotificationCenter.defaultCenter()
+
     override init(){
         super.init()
+        self.nc.addObserver(self, selector: Selector("rounteChangeEventHandler:"),
+            name: AVAudioSessionRouteChangeNotification,
+            object: nil)
+    }
+    
+    func rounteChangeEventHandler(notification: NSNotification){
+        println("Got notification: \(notification.name)")
+        if let reason: AnyObject = notification.userInfo![AVAudioSessionRouteChangeReasonKey]{
+            if let r = AVAudioSessionRouteChangeReason(rawValue: UInt(reason.integerValue)) {
+                switch r {
+                case .NewDeviceAvailable:
+                    println("New device available")
+                case .OldDeviceUnavailable:
+                    println("Old device unavaiable")
+                    self.model?.stop()
+                default:
+                    println("Other reason:\(r)")
+                }
+            } else {
+                println ("Other reason")
+            }
+        }
     }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

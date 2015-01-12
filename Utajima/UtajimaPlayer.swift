@@ -21,6 +21,7 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
         super.init()
         self.model = model
         self.setAudioSession()
+        
     }
     
     private func setAudioSession(){
