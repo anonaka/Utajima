@@ -18,8 +18,8 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var controllerBar: UIToolbar!
     
-    var playButton:UIBarButtonItem? = nil
-    var pauseButton:UIBarButtonItem? = nil
+    var playButton:UIBarButtonItem!
+    var pauseButton:UIBarButtonItem!
 
     var model:UtajimaModel!  = nil
     let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
@@ -62,9 +62,9 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     func updatePlayPauseButton(){
         let PlayPauseButtonOffset:Int = 2
         if self.model.playState == .Playing {
-            self.controllerBar.items![PlayPauseButtonOffset] = self.pauseButton!
+            self.controllerBar.items![PlayPauseButtonOffset] = self.pauseButton
         } else {
-            self.controllerBar.items![PlayPauseButtonOffset] = self.playButton!
+            self.controllerBar.items![PlayPauseButtonOffset] = self.playButton
         }
     }
    

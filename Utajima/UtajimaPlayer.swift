@@ -12,8 +12,8 @@ import AVFoundation
 
 class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
 
-    private var model:UtajimaModel! = nil
-    private var avPlayer:AVAudioPlayer? = nil
+    private var model:UtajimaModel!
+    private var avPlayer:AVAudioPlayer!
     private var audioSession:AVAudioSession = AVAudioSession.sharedInstance()
     private var error: NSErrorPointer = NSErrorPointer()
     
@@ -32,9 +32,9 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
     func play(song:AnyObject){
         let url:NSURL = song.valueForProperty(MPMediaItemPropertyAssetURL) as NSURL
         self.avPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
-        self.avPlayer!.delegate = self
-        println("Duration: \(self.avPlayer!.duration)")
-        self.avPlayer!.play()
+        self.avPlayer.delegate = self
+        println("Duration: \(self.avPlayer.duration)")
+        self.avPlayer.play()
     }
     
 
@@ -44,11 +44,11 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
     }
     
     func pause(){
-        self.avPlayer!.pause()
+        self.avPlayer?.pause()
     }
     
     func resume(){
-        self.avPlayer!.play()
+        self.avPlayer?.play()
     }
     
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {

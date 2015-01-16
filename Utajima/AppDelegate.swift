@@ -13,7 +13,7 @@ import AVFoundation
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var model : UtajimaModel? = nil
+    var model : UtajimaModel!
     let nc = NSNotificationCenter.defaultCenter()
 
     override init(){
@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     println("New device available")
                 case .OldDeviceUnavailable:
                     println("Old device unavaiable")
-                    self.model?.stop()
+                    self.model.stop()
                 default:
                     println("Other reason:\(r)")
                 }

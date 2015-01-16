@@ -12,9 +12,9 @@ import MediaPlayer
 class UtajimaModel: UIResponder {
     enum PlayState { case Stopped, Playing, Paused }
     var playState:PlayState = .Stopped
-    var viewController:UtajimaListTableViewController! = nil
+    var viewController:UtajimaListTableViewController!
     var musicCollection: [AnyObject] = []
-    var myPlayer:UtajimaPlayer? = nil
+    var myPlayer:UtajimaPlayer!
     
     init(viewController: UtajimaListTableViewController){
         println("hi utajmamodel")
@@ -67,14 +67,14 @@ class UtajimaModel: UIResponder {
             self.playState = .Stopped
         } else {
             let song:AnyObject = self.musicCollection[0]
-            self.myPlayer!.play(song)
+            self.myPlayer.play(song)
             self.playState = .Playing
         }
         self.viewController.updatePlayPauseButton()
     }
     
     func pause(){
-        self.myPlayer!.pause()
+        self.myPlayer.pause()
         self.playState = .Paused
         self.viewController.updatePlayPauseButton()
     }
@@ -100,7 +100,7 @@ class UtajimaModel: UIResponder {
     }
     
     func stop(){
-        self.myPlayer!.stop()
+        self.myPlayer.stop()
         self.playState = .Stopped
         self.viewController.updatePlayPauseButton()
     }
