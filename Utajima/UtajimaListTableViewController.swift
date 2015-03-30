@@ -211,10 +211,6 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         }    
     }
 
-    // Override to support rearranging the table view.
-    func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-        self.model.movePlaybackQueue(fromIndexPath.row, to: toIndexPath.row)
-    }
 
     // Override to support conditional rearranging of the table view.
     func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -225,7 +221,22 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
             return true
         }
     }
-       
+    
+    func tableView(tableView: UITableView,
+        targetIndexPathForMoveFromRowAtIndexPath sourceIndexPath: NSIndexPath,
+        toProposedIndexPath proposedDestinationIndexPath: NSIndexPath) -> NSIndexPath {
+        
+        if (proposedDestinationIndexPath.row < 2) {
+            return NSIndexPath(forRow: 1, inSection: proposedDestinationIndexPath.section)
+        } else {
+            return proposedDestinationIndexPath
+        }
+    }
+    
+    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        self.model.movePlaybackQueue(sourceIndexPath.row,to: destinationIndexPath.row)
+    }
+    
     @IBAction func doRewind(sender: AnyObject) {
         self.model.rewind()
     }
