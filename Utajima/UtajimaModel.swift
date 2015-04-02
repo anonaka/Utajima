@@ -8,20 +8,30 @@
 
 import UIKit
 import MediaPlayer
+import CoreData
 
 class UtajimaModel: UIResponder {
     enum PlayState { case Stopped, Playing, Paused }
     var playState:PlayState = .Stopped
-    var viewController:UtajimaListTableViewController!
+    let viewController:UtajimaListTableViewController!
     var musicCollection: [AnyObject] = []
     var myPlayer:UtajimaPlayer!
     
+    let appDelegate: AppDelegate
+    let managedContext: NSManagedObjectContext
+    let entity: NSEntityDescription?
+    
     init(viewController: UtajimaListTableViewController){
         println("hi utajmamodel")
+        
+        self.appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        self.managedContext = self.appDelegate.managedObjectContext!
+        
+        /* Create new ManagedObject */
+        self.entity = NSEntityDescription.entityForName("Entity", inManagedObjectContext: self.managedContext)
         super.init()
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        appDelegate.model = self
         self.viewController = viewController
+        self.appDelegate.model = self
         self.myPlayer = UtajimaPlayer(model: self)
     }
     
@@ -71,6 +81,8 @@ class UtajimaModel: UIResponder {
             self.playState = .Playing
         }
         self.viewController.updatePlayPauseButton()
+        
+        self.saveMusicCollection()
     }
     
     func pause(){
@@ -111,5 +123,19 @@ class UtajimaModel: UIResponder {
         }
         self.viewController.tableView.reloadData()
         self.play()
+    }
+    
+    func saveMusicCollection(){
+        // save music list to CoreData
+        var pidList:[NSNumber] = []
+        for song in self.musicCollection {
+            var pid = song.valueForProperty(MPMediaItemPropertyPersistentID) as NSNumber
+            pidList.append(pid)
+        }
+        self.writeCoreData(pidList)
+    }
+
+    func writeCoreData(pidList:[NSNumber]){
+        
     }
 }

@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0BD4ED411AC93C0100BC0C9F /* UtajimaSongs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0BD4ED3F1AC93C0100BC0C9F /* UtajimaSongs.xcdatamodeld */; };
+		0B33FFB91ACBFB0C004692CF /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B33FFB81ACBFB0C004692CF /* Entity.swift */; };
+		0B88A01C1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B88A01A1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodeld */; };
+		0BD4ED411AC93C0100BC0C9F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		5837FFF51A2945BD00D81823 /* UtajimaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5837FFF41A2945BD00D81823 /* UtajimaPlayer.swift */; };
 		5872AA601A200DFA00B3A574 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872AA5F1A200DFA00B3A574 /* AppDelegate.swift */; };
 		5872AA651A200DFA00B3A574 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5872AA631A200DFA00B3A574 /* Main.storyboard */; };
@@ -29,7 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0BD4ED401AC93C0100BC0C9F /* UtajimaSongs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UtajimaSongs.xcdatamodel; sourceTree = "<group>"; };
+		0B33FFB81ACBFB0C004692CF /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		0B88A01B1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UtajimaSongModel.xcdatamodel; sourceTree = "<group>"; };
 		582A9A731A620F2C009223CE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		582A9A741A620F2C009223CE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5837FFF41A2945BD00D81823 /* UtajimaPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtajimaPlayer.swift; sourceTree = "<group>"; };
@@ -86,9 +89,10 @@
 			isa = PBXGroup;
 			children = (
 				5872AA5F1A200DFA00B3A574 /* AppDelegate.swift */,
+				0B88A01A1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodeld */,
+				0B33FFB81ACBFB0C004692CF /* Entity.swift */,
 				5872AA631A200DFA00B3A574 /* Main.storyboard */,
 				5872AA811A20138100B3A574 /* UtajimaListTableViewController.swift */,
-				0BD4ED3F1AC93C0100BC0C9F /* UtajimaSongs.xcdatamodeld */,
 				5872AA831A20140100B3A574 /* UtajimaModel.swift */,
 				5837FFF41A2945BD00D81823 /* UtajimaPlayer.swift */,
 				5872AA661A200DFA00B3A574 /* Images.xcassets */,
@@ -231,9 +235,11 @@
 			files = (
 				5872AA841A20140100B3A574 /* UtajimaModel.swift in Sources */,
 				5872AA601A200DFA00B3A574 /* AppDelegate.swift in Sources */,
+				0B33FFB91ACBFB0C004692CF /* Entity.swift in Sources */,
+				0B88A01C1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodeld in Sources */,
 				5837FFF51A2945BD00D81823 /* UtajimaPlayer.swift in Sources */,
 				5872AA821A20138100B3A574 /* UtajimaListTableViewController.swift in Sources */,
-				0BD4ED411AC93C0100BC0C9F /* UtajimaSongs.xcdatamodeld in Sources */,
+				0BD4ED411AC93C0100BC0C9F /* (null) in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +457,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0B88A01A1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0B88A01B1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodel */,
+			);
+			currentVersion = 0B88A01B1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodel */;
+			path = UtajimaSongModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5872AA521A200DFA00B3A574 /* Project object */;
 }

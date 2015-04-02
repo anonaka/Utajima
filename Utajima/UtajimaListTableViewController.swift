@@ -211,7 +211,6 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         }    
     }
 
-
     // Override to support conditional rearranging of the table view.
     func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return NO if you do not want the item to be re-orderable.
