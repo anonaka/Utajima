@@ -22,8 +22,6 @@ class UtajimaModel: UIResponder {
     let entity: NSEntityDescription?
     
     init(viewController: UtajimaListTableViewController){
-        println("hi utajmamodel")
-        
         self.appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         self.managedContext = self.appDelegate.managedObjectContext!
         
@@ -34,7 +32,6 @@ class UtajimaModel: UIResponder {
         self.appDelegate.model = self
         self.myPlayer = UtajimaPlayer(model: self)
     }
-    
     
     func getMusicsCount() -> Int {
         //println("music count: \(self.musicCollection.count)")
