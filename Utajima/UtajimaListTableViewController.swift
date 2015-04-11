@@ -149,7 +149,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
 
         // Configure the cell...
         cell.textLabel?.text = self.model.getTitleAt(indexPath.row)
@@ -160,7 +160,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     }
     
     func updateVisibleCells(){
-        for vc in self.tableView.visibleCells() as [UITableViewCell]{
+        for vc in self.tableView.visibleCells() as! [UITableViewCell]{
             vc.reloadInputViews()
         }
     }

@@ -30,7 +30,7 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
     }
     
     func play(song:AnyObject){
-        let url:NSURL = song.valueForProperty(MPMediaItemPropertyAssetURL) as NSURL
+        let url:NSURL = song.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL
         self.avPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
         self.avPlayer.delegate = self
         println("Duration: \(self.avPlayer.duration)")

@@ -22,13 +22,12 @@ class UtajimaModel: UIResponder {
     let entity: NSEntityDescription?
     
     init(viewController: UtajimaListTableViewController){
-        self.appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         self.managedContext = self.appDelegate.managedObjectContext!
-        
+        self.viewController = viewController
         /* Create new ManagedObject */
         self.entity = NSEntityDescription.entityForName("Entity", inManagedObjectContext: self.managedContext)
         super.init()
-        self.viewController = viewController
         self.appDelegate.model = self
         self.myPlayer = UtajimaPlayer(model: self)
     }
@@ -39,16 +38,16 @@ class UtajimaModel: UIResponder {
     }
     
     func getTitleAt(index : Int) -> String? {
-        return self.musicCollection[index].title?
+        return self.musicCollection[index].title
     }
 
     func getAlbumTitleAt(index : Int) -> String? {
-        return self.musicCollection[index].albumTitle?
+        return self.musicCollection[index].albumTitle
     }
     
     func getArtworkAt(index : Int) -> MPMediaItemArtwork? {
         //TODO retuen default artwork when nil
-        return self.musicCollection[index].artwork?
+        return self.musicCollection[index].artwork
     }
 
     func addSongToPlaybackQueue(mediaCollection:MPMediaItemCollection){
@@ -126,7 +125,7 @@ class UtajimaModel: UIResponder {
         // save music list to CoreData
         var pidList:[NSNumber] = []
         for song in self.musicCollection {
-            var pid = song.valueForProperty(MPMediaItemPropertyPersistentID) as NSNumber
+            var pid = song.valueForProperty(MPMediaItemPropertyPersistentID) as! NSNumber
             pidList.append(pid)
         }
         self.writeCoreData(pidList)
