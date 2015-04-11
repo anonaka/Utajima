@@ -47,7 +47,11 @@ class UtajimaModel: UIResponder {
     
     func getArtworkAt(index : Int) -> MPMediaItemArtwork? {
         //TODO retuen default artwork when nil
-        return self.musicCollection[index].artwork
+        if let aw = self.musicCollection[index].artwork {
+            return aw
+        } else {
+            return nil
+        }
     }
 
     func addSongToPlaybackQueue(mediaCollection:MPMediaItemCollection){

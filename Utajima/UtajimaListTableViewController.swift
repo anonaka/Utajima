@@ -120,9 +120,9 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     
     func mediaPicker(mediaPicker: MPMediaPickerController!,
         didPickMediaItems mediaItemCollection: MPMediaItemCollection!){
-        mediaPicker.dismissViewControllerAnimated(true, completion: nil)
-        self.model.addSongToPlaybackQueue(mediaItemCollection)
-        return
+            mediaPicker.dismissViewControllerAnimated(true, completion: nil)
+            self.model.addSongToPlaybackQueue(mediaItemCollection)
+            return
     }
     
     func mediaPickerDidCancel(mediaPicker: MPMediaPickerController!) {
