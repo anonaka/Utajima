@@ -33,7 +33,6 @@ class UtajimaModel: UIResponder {
     }
     
     func getMusicsCount() -> Int {
-        //println("music count: \(self.musicCollection.count)")
         return self.musicCollection.count
     }
     
