@@ -150,7 +150,6 @@ class UtajimaModel: UIResponder {
         if !self.managedContext.save(&error) {
             println("Could not save \(error), \(error?.userInfo)")
         }
-        println("object saved")
     }
     
     func fetchMusicCollection(delete: Bool = false){
@@ -165,7 +164,6 @@ class UtajimaModel: UIResponder {
             for obj:AnyObject in results {
                 if delete == true {
                     self.managedContext.deleteObject(obj as! NSManagedObject)
-                    println("Delete")
                 } else {
                     let pid:NSNumber? = obj.valueForKey("songPersistendId") as? NSNumber
                     if pid != nil {
@@ -175,7 +173,6 @@ class UtajimaModel: UIResponder {
                     }
                 }
             }
-            println(results.count)
         } else {
             println("Could not fetch \(error) , \(error!.userInfo)")
         }
