@@ -82,7 +82,6 @@ class UtajimaModel: UIResponder {
             self.playState = .Playing
         }
         self.viewController.updatePlayPauseButton()
-        
         self.saveMusicCollection()
     }
     
