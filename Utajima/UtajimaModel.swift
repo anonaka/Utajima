@@ -20,6 +20,7 @@ class UtajimaModel: UIResponder {
     let appDelegate: AppDelegate
     let managedContext: NSManagedObjectContext
     let entity: NSEntityDescription?
+    let entityName = "SongPidList"
     
     init(viewController: UtajimaListTableViewController){
         self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -30,6 +31,7 @@ class UtajimaModel: UIResponder {
         super.init()
         self.appDelegate.model = self
         self.myPlayer = UtajimaPlayer(model: self)
+        self.fetchMusicCollection()
     }
     
     func getMusicsCount() -> Int {
@@ -125,6 +127,8 @@ class UtajimaModel: UIResponder {
     }
     
     func saveMusicCollection(){
+        // delet all data first
+        fetchMusicCollection(delete: true)
         // save music list to CoreData
         var pidList:[NSNumber] = []
         for song in self.musicCollection {
@@ -136,7 +140,7 @@ class UtajimaModel: UIResponder {
 
     func writeCoreData(pidList:[NSNumber]){
         for pid in pidList {
-            let managedObject: AnyObject = NSEntityDescription.insertNewObjectForEntityForName("SongPidList", inManagedObjectContext: self.managedContext)
+            let managedObject: AnyObject = NSEntityDescription.insertNewObjectForEntityForName(self.entityName , inManagedObjectContext: self.managedContext)
             // エンティティモデルにデータをセット
             let model = managedObject as! SongPidList
             model.songPersistendId = pid
@@ -149,11 +153,43 @@ class UtajimaModel: UIResponder {
         println("object saved")
     }
     
-    func fetchMusicCollection(){
+    func fetchMusicCollection(delete: Bool = false){
+    
+        /* Set search conditions */
+        let fetchRequest = NSFetchRequest(entityName: self.entityName)
+        var error: NSError?
         
+        /* Get result array from ManagedObjectContext */
+        let fetchResults = self.managedContext.executeFetchRequest(fetchRequest, error: &error)
+        if let results: Array = fetchResults {
+            for obj:AnyObject in results {
+                if delete == true {
+                    self.managedContext.deleteObject(obj as! NSManagedObject)
+                    println("Delete")
+                } else {
+                    let pid:NSNumber? = obj.valueForKey("songPersistendId") as? NSNumber
+                    if pid != nil {
+                        if let item:AnyObject = getMediaItemFromPid(pid){
+                            self.musicCollection.append(item)
+                        }
+                    }
+                }
+            }
+            println(results.count)
+        } else {
+            println("Could not fetch \(error) , \(error!.userInfo)")
+        }
     }
     
-    func deleteAllMusicCollection(){
-        
+    func getMediaItemFromPid(pid:NSNumber?) -> AnyObject? {
+       // MPMediaPropertyPredicate *songFromId =[MPMediaPropertyPredicate predicateWithValue:preId forProperty:MPMediaItemPropertyPersistentID];
+        let pred = MPMediaPropertyPredicate(value:pid, forProperty: MPMediaItemPropertyPersistentID)
+        let query = MPMediaQuery()
+        query.addFilterPredicate(pred)
+        if query.items.count > 0 {
+            return query.items[0]
+        } else {
+            return nil
+        }
     }
 }
