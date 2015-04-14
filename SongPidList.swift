@@ -1,15 +1,15 @@
 //
-//  Entity.swift
+//  SongPidList.swift
 //  Utajima
 //
-//  Created by Akira Nonaka on 2015/04/01.
+//  Created by Akira Nonaka on 2015/04/13.
 //  Copyright (c) 2015年 nonaka@mac.com. All rights reserved.
 //
 
 import Foundation
 import CoreData
 
-class Entity: NSManagedObject {
+class SongPidList: NSManagedObject {
 
     @NSManaged var songPersistendId: NSNumber
 

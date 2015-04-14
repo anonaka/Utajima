@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B33FFB91ACBFB0C004692CF /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B33FFB81ACBFB0C004692CF /* Entity.swift */; };
+		0B09F91B1ADBC52C002E6179 /* SongPidList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B09F91A1ADBC52C002E6179 /* SongPidList.swift */; };
 		0B88A01C1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B88A01A1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodeld */; };
 		0BD4ED411AC93C0100BC0C9F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		5837FFF51A2945BD00D81823 /* UtajimaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5837FFF41A2945BD00D81823 /* UtajimaPlayer.swift */; };
@@ -31,7 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B33FFB81ACBFB0C004692CF /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		0B09F91A1ADBC52C002E6179 /* SongPidList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongPidList.swift; path = ../SongPidList.swift; sourceTree = "<group>"; };
 		0B88A01B1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UtajimaSongModel.xcdatamodel; sourceTree = "<group>"; };
 		582A9A731A620F2C009223CE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		582A9A741A620F2C009223CE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -88,9 +88,9 @@
 		5872AA5C1A200DFA00B3A574 /* Utajima */ = {
 			isa = PBXGroup;
 			children = (
+				0B09F91A1ADBC52C002E6179 /* SongPidList.swift */,
 				5872AA5F1A200DFA00B3A574 /* AppDelegate.swift */,
 				0B88A01A1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodeld */,
-				0B33FFB81ACBFB0C004692CF /* Entity.swift */,
 				5872AA631A200DFA00B3A574 /* Main.storyboard */,
 				5872AA811A20138100B3A574 /* UtajimaListTableViewController.swift */,
 				5872AA831A20140100B3A574 /* UtajimaModel.swift */,
@@ -235,8 +235,8 @@
 			files = (
 				5872AA841A20140100B3A574 /* UtajimaModel.swift in Sources */,
 				5872AA601A200DFA00B3A574 /* AppDelegate.swift in Sources */,
-				0B33FFB91ACBFB0C004692CF /* Entity.swift in Sources */,
 				0B88A01C1ACAB10D0009B929 /* UtajimaSongModel.xcdatamodeld in Sources */,
+				0B09F91B1ADBC52C002E6179 /* SongPidList.swift in Sources */,
 				5837FFF51A2945BD00D81823 /* UtajimaPlayer.swift in Sources */,
 				5872AA821A20138100B3A574 /* UtajimaListTableViewController.swift in Sources */,
 				0BD4ED411AC93C0100BC0C9F /* (null) in Sources */,

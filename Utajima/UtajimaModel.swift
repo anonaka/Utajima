@@ -26,7 +26,7 @@ class UtajimaModel: UIResponder {
         self.managedContext = self.appDelegate.managedObjectContext!
         self.viewController = viewController
         /* Create new ManagedObject */
-        self.entity = NSEntityDescription.entityForName("Entity", inManagedObjectContext: self.managedContext)
+        self.entity = NSEntityDescription.entityForName("SongPidList", inManagedObjectContext: self.managedContext)
         super.init()
         self.appDelegate.model = self
         self.myPlayer = UtajimaPlayer(model: self)
@@ -135,6 +135,25 @@ class UtajimaModel: UIResponder {
     }
 
     func writeCoreData(pidList:[NSNumber]){
+        for pid in pidList {
+            let managedObject: AnyObject = NSEntityDescription.insertNewObjectForEntityForName("SongPidList", inManagedObjectContext: self.managedContext)
+            // エンティティモデルにデータをセット
+            let model = managedObject as! SongPidList
+            model.songPersistendId = pid
+        }
+        /* Error handling */
+        var error: NSError?
+        if !self.managedContext.save(&error) {
+            println("Could not save \(error), \(error?.userInfo)")
+        }
+        println("object saved")
+    }
+    
+    func fetchMusicCollection(){
+        
+    }
+    
+    func deleteAllMusicCollection(){
         
     }
 }
