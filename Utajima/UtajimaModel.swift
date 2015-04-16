@@ -57,9 +57,9 @@ class UtajimaModel: UIResponder {
 
     func addSongToPlaybackQueue(mediaCollection:MPMediaItemCollection){
         // add a selected song to the playback queue
-        self.viewController.reloadInputViews()
         self.musicCollection +=  mediaCollection.items
-        
+        self.viewController.reloadInputViews()
+        self.viewController.tableView.reloadData()
     }
     
     func removePlaybackQueueAtIndex(index:Int){
