@@ -21,7 +21,8 @@ class UtajimaModel: UIResponder {
     let managedContext: NSManagedObjectContext
     let entity: NSEntityDescription?
     let entityName = "SongPidList"
-    
+    let maxQueueLength = 30
+
     init(viewController: UtajimaListTableViewController){
         self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         self.managedContext = self.appDelegate.managedObjectContext!
@@ -58,8 +59,15 @@ class UtajimaModel: UIResponder {
     func addSongToPlaybackQueue(mediaCollection:MPMediaItemCollection){
         // add a selected song to the playback queue
         self.musicCollection +=  mediaCollection.items
+        self.truncateQueue()
         self.viewController.reloadInputViews()
         self.viewController.tableView.reloadData()
+    }
+    
+    func truncateQueue() {
+        while self.maxQueueLength < self.musicCollection.count {
+           self.musicCollection.removeLast()
+        }
     }
     
     func removePlaybackQueueAtIndex(index:Int){
