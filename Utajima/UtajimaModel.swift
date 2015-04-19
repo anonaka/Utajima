@@ -186,7 +186,6 @@ class UtajimaModel: UIResponder {
     }
     
     func getMediaItemFromPid(pid:NSNumber?) -> AnyObject? {
-       // MPMediaPropertyPredicate *songFromId =[MPMediaPropertyPredicate predicateWithValue:preId forProperty:MPMediaItemPropertyPersistentID];
         let pred = MPMediaPropertyPredicate(value:pid, forProperty: MPMediaItemPropertyPersistentID)
         let query = MPMediaQuery()
         query.addFilterPredicate(pred)
