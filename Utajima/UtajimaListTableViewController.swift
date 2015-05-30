@@ -152,6 +152,8 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
 
         // Configure the cell...
+        //TODO fix bug
+        // 5/30/2015 program chrash here when core data is corrupted...
         cell.textLabel?.text = self.model.getTitleAt(indexPath.row)
         cell.detailTextLabel?.text = self.model.getAlbumTitleAt(indexPath.row)
         var image:UIImage? = self.model.getArtworkAt(indexPath.row)?.imageWithSize(CGSizeMake(80.0,80.0))
