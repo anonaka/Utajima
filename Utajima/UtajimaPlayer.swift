@@ -30,7 +30,9 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
     }
     
     func play(song:AnyObject){
+        //TODO next line may throw exception. Must catch. anonaka 6/30/2015
         let url:NSURL = song.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL
+        //TODO end
         self.avPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
         self.avPlayer.delegate = self
         self.avPlayer.play()
