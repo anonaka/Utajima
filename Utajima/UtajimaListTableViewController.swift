@@ -245,8 +245,9 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     @IBAction func doPlay(sender: AnyObject) {
         switch self.model.playState {
         case .Stopped:
-            self.model.play()
-            self.playPauseButton = self.pauseButton
+            if self.model.play() {
+             self.playPauseButton = self.pauseButton
+            }
         case .Paused:
             self.model.resume()
         case .Playing:
@@ -259,6 +260,22 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     
     @IBAction func DoFF(sender: AnyObject) {
         self.model.fastForward()
+    }
+    
+    func showUtajimaAlert(errMsg: String){
+        let alert:UIAlertController = UIAlertController(title:"Alert",
+            message: errMsg,
+            preferredStyle: UIAlertControllerStyle.Alert
+        )
+        // Default 複数指定可
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK",
+            style: UIAlertActionStyle.Default,
+            handler:{
+                (action:UIAlertAction!) -> Void in
+                println("OK")
+        })
+        alert.addAction(defaultAction)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
 }

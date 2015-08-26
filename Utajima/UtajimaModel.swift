@@ -81,16 +81,23 @@ class UtajimaModel: UIResponder {
         self.musicCollection.insert(tmpobj, atIndex: to)
     }
     
-    func play(){
+    func play() -> Bool {
         if self.musicCollection.isEmpty == true {
             self.playState = .Stopped
         } else {
             let song:AnyObject = self.musicCollection[0]
-            self.myPlayer.play(song)
-            self.playState = .Playing
+            if (self.myPlayer.play(song)) {
+                self.playState = .Playing
+            } else {
+                //cannot play a song due to error
+                viewController.showUtajimaAlert("Cannot play Old DRM format music!")
+                self.removeMusicFromCollection()
+                return false
+            }
         }
         self.viewController.updatePlayPauseButton()
         self.saveMusicCollection()
+        return true
     }
     
     func pause(){
@@ -126,12 +133,17 @@ class UtajimaModel: UIResponder {
     }
     
     func playDone(){
+        self.removeMusicFromCollection()
+        self.play()
+    }
+    
+    func removeMusicFromCollection(){
         if !self.musicCollection.isEmpty {
             self.musicCollection.removeAtIndex(0)
         }
         self.viewController.tableView.reloadData()
-        self.play()
     }
+
     
     func saveMusicCollection(){
         // delet all data first

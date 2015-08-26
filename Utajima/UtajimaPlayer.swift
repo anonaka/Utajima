@@ -29,13 +29,18 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
         self.audioSession.setActive(true, error: self.error)
     }
     
-    func play(song:AnyObject){
+    func play(song:AnyObject) -> Bool{
         //TODO next line may throw exception. Must catch. anonaka 6/30/2015
-        let url:NSURL = song.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL
-        //TODO end
-        self.avPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
-        self.avPlayer.delegate = self
-        self.avPlayer.play()
+        if let url:NSURL = song.valueForProperty(MPMediaItemPropertyAssetURL) as? NSURL {
+            self.avPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
+            self.avPlayer.delegate = self
+            self.avPlayer.play()
+            return true
+        } else {
+            // cannot play old DRM format songs
+            return false
+        }
+        
     }
     
     func stop(){
