@@ -91,6 +91,7 @@ class UtajimaModel: UIResponder {
             } else {
                 //cannot play a song due to error
                 viewController.showUtajimaAlert("Cannot play Old DRM format music!")
+                self.stop()
                 self.removeMusicFromCollection()
                 return false
             }
