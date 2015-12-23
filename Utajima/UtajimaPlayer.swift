@@ -25,13 +25,21 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
     }
     
     private func setAudioSession(){
-        self.audioSession.setCategory(AVAudioSessionCategoryPlayback, error: self.error)
-        self.audioSession.setActive(true, error: self.error)
+        do {
+            try self.audioSession.setCategory(AVAudioSessionCategoryPlayback)
+        } catch let error1 as NSError {
+            self.error.memory = error1
+        }
+        do {
+            try self.audioSession.setActive(true)
+        } catch let error1 as NSError {
+            self.error.memory = error1
+        }
     }
     
     func play(song:AnyObject) -> Bool{
         if let url:NSURL = song.valueForProperty(MPMediaItemPropertyAssetURL) as? NSURL {
-            self.avPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
+            self.avPlayer = try? AVAudioPlayer(contentsOfURL: url)
             self.avPlayer.delegate = self
             self.avPlayer.play()
             return true
@@ -55,7 +63,7 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
         self.avPlayer?.play()
     }
     
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         self.model.playDone()
     }
 }

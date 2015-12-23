@@ -14,7 +14,7 @@ class UtajimaModel: UIResponder {
     enum PlayState { case Stopped, Playing, Paused }
     var playState:PlayState = .Stopped
     let viewController:UtajimaListTableViewController!
-    var musicCollection: [AnyObject] = []
+    var musicCollection: [MPMediaItem] = []
     var myPlayer:UtajimaPlayer!
     
     let appDelegate: AppDelegate
@@ -58,7 +58,7 @@ class UtajimaModel: UIResponder {
 
     func addSongToPlaybackQueue(mediaCollection:MPMediaItemCollection){
         // add a selected song to the playback queue
-        self.musicCollection +=  mediaCollection.items
+        self.musicCollection += mediaCollection.items
         self.truncateQueue()
         self.viewController.reloadInputViews()
         self.viewController.tableView.reloadData()
@@ -76,7 +76,7 @@ class UtajimaModel: UIResponder {
     
     
     func movePlaybackQueue(from:Int,to:Int){
-        let tmpobj:AnyObject = self.musicCollection[from]
+        let tmpobj:MPMediaItem = self.musicCollection[from]
         self.musicCollection.removeAtIndex(from)
         self.musicCollection.insert(tmpobj, atIndex: to)
     }
@@ -109,7 +109,7 @@ class UtajimaModel: UIResponder {
     
     func resume(){
         if self.playState != .Paused {
-            println("State transition error")
+            print("State transition error")
             // must throw exception here
         } else {
             self.myPlayer!.resume()
@@ -148,11 +148,11 @@ class UtajimaModel: UIResponder {
     
     func saveMusicCollection(){
         // delet all data first
-        fetchMusicCollection(delete: true)
+        fetchMusicCollection(true)
         // save music list to CoreData
         var pidList:[NSNumber] = []
         for song in self.musicCollection {
-            var pid = song.valueForProperty(MPMediaItemPropertyPersistentID) as! NSNumber
+            let pid = song.valueForProperty(MPMediaItemPropertyPersistentID) as! NSNumber
             pidList.append(pid)
         }
         self.writeCoreData(pidList)
@@ -167,8 +167,11 @@ class UtajimaModel: UIResponder {
         }
         /* Error handling */
         var error: NSError?
-        if !self.managedContext.save(&error) {
-            println("Could not save \(error), \(error?.userInfo)")
+        do {
+            try self.managedContext.save()
+        } catch let error1 as NSError {
+            error = error1
+            print("Could not save \(error), \(error?.userInfo)")
         }
     }
     
@@ -179,7 +182,13 @@ class UtajimaModel: UIResponder {
         var error: NSError?
         
         /* Get result array from ManagedObjectContext */
-        let fetchResults = self.managedContext.executeFetchRequest(fetchRequest, error: &error)
+        let fetchResults: [AnyObject]?
+        do {
+            fetchResults = try self.managedContext.executeFetchRequest(fetchRequest)
+        } catch let error1 as NSError {
+            error = error1
+            fetchResults = nil
+        }
         if let results: Array = fetchResults {
             for obj:AnyObject in results {
                 if delete == true {
@@ -187,23 +196,23 @@ class UtajimaModel: UIResponder {
                 } else {
                     let pid:NSNumber? = obj.valueForKey("songPersistendId") as? NSNumber
                     if pid != nil {
-                        if let item:AnyObject = getMediaItemFromPid(pid){
+                        if let item:MPMediaItem = getMediaItemFromPid(pid){
                             self.musicCollection.append(item)
                         }
                     }
                 }
             }
         } else {
-            println("Could not fetch \(error) , \(error!.userInfo)")
+            print("Could not fetch \(error) , \(error!.userInfo)")
         }
     }
     
-    func getMediaItemFromPid(pid:NSNumber?) -> AnyObject? {
+    func getMediaItemFromPid(pid:NSNumber?) -> MPMediaItem? {
         let pred = MPMediaPropertyPredicate(value:pid, forProperty: MPMediaItemPropertyPersistentID)
         let query = MPMediaQuery()
         query.addFilterPredicate(pred)
-        if query.items.count > 0 {
-            return query.items[0]
+        if query.items!.count > 0 {
+            return query.items![0]
         } else {
             return nil
         }

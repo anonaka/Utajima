@@ -22,15 +22,14 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     var pauseButton:UIBarButtonItem!
 
     var model:UtajimaModel!  = nil
-    let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
-
+ 
     override func canBecomeFirstResponder() -> Bool {
         return true
     }
     
-    override func remoteControlReceivedWithEvent(event: UIEvent) {
-        if (event.type == .RemoteControl) {
-            switch (event.subtype) {
+    override func remoteControlReceivedWithEvent(event: UIEvent?) {
+        if (event!.type == .RemoteControl) {
+            switch (event!.subtype) {
             case .RemoteControlPlay:
                 self.doPlay(self)
             case .RemoteControlStop:
@@ -48,7 +47,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
             case .RemoteControlEndSeekingForward:
                 self.DoFF(self)
             default:
-                println("Event not handled:\(event.subtype.rawValue)")
+                print("Event not handled:\(event!.subtype.rawValue)")
              }
         }
     }
@@ -75,8 +74,6 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         self.tableView.dataSource = self
         self.tableView.delegate = self
 
-        self.myMediaPicker.allowsPickingMultipleItems = true
-        self.myMediaPicker.delegate = self
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
@@ -93,8 +90,8 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         //TODO check if I can write this one line
-        if self.tableView.indexPathForSelectedRow() != nil {
-            self.tableView.deselectRowAtIndexPath(self.tableView.indexPathForSelectedRow()!, animated:animated)
+        if self.tableView.indexPathForSelectedRow != nil {
+            self.tableView.deselectRowAtIndexPath(self.tableView.indexPathForSelectedRow!, animated:animated)
         }
     }
 
@@ -114,18 +111,20 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     }
     
     func runMediaPicker() {
-        //self.hideController(true)
-        self.presentViewController(self.myMediaPicker, animated: true, completion: nil)
+        let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
+        myMediaPicker.allowsPickingMultipleItems = true
+        myMediaPicker.delegate = self
+        self.presentViewController(myMediaPicker, animated: true, completion: nil)
     }
     
-    func mediaPicker(mediaPicker: MPMediaPickerController!,
-        didPickMediaItems mediaItemCollection: MPMediaItemCollection!){
+    func mediaPicker(mediaPicker: MPMediaPickerController,
+        didPickMediaItems mediaItemCollection: MPMediaItemCollection){
             mediaPicker.dismissViewControllerAnimated(true, completion: nil)
             self.model.addSongToPlaybackQueue(mediaItemCollection)
             return
     }
     
-    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController!) {
+    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController) {
         mediaPicker.dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -149,20 +148,20 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
 
         // Configure the cell...
         //TODO fix bug
         // 5/30/2015 program chrash here when core data is corrupted...
         cell.textLabel?.text = self.model.getTitleAt(indexPath.row)
         cell.detailTextLabel?.text = self.model.getAlbumTitleAt(indexPath.row)
-        var image:UIImage? = self.model.getArtworkAt(indexPath.row)?.imageWithSize(CGSizeMake(80.0,80.0))
+        let image:UIImage? = self.model.getArtworkAt(indexPath.row)?.imageWithSize(CGSizeMake(80.0,80.0))
         cell.imageView?.image = image
         return cell
     }
     
     func updateVisibleCells(){
-        for vc in self.tableView.visibleCells() as! [UITableViewCell]{
+        for vc in self.tableView.visibleCells {
             vc.reloadInputViews()
         }
     }
@@ -181,9 +180,9 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
             
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.Right:
-                println("Swiped right")
+                print("Swiped right")
             case UISwipeGestureRecognizerDirection.Down:
-                println("Swiped down")
+                print("Swiped down")
             default:
                 break
             }
@@ -253,7 +252,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         case .Playing:
             self.model.pause()
         default:
-            println("state error")
+            print("state error")
             //TODO must thorow exception here
         }
     }
@@ -271,8 +270,8 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         let defaultAction: UIAlertAction = UIAlertAction(title: "OK",
             style: UIAlertActionStyle.Default,
             handler:{
-                (action:UIAlertAction!) -> Void in
-                println("OK")
+                (action:UIAlertAction) -> Void in
+                print("OK")
         })
         alert.addAction(defaultAction)
         self.presentViewController(alert, animated: true, completion: nil)
