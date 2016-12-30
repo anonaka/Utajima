@@ -23,28 +23,28 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
 
     var model:UtajimaModel!  = nil
  
-    override func canBecomeFirstResponder() -> Bool {
+    override var canBecomeFirstResponder : Bool {
         return true
     }
     
-    override func remoteControlReceivedWithEvent(event: UIEvent?) {
-        if (event!.type == .RemoteControl) {
+    override func remoteControlReceived(with event: UIEvent?) {
+        if (event!.type == .remoteControl) {
             switch (event!.subtype) {
-            case .RemoteControlPlay:
+            case .remoteControlPlay:
                 self.doPlay(self)
-            case .RemoteControlStop:
+            case .remoteControlStop:
                 self.doPlay(self)
-            case .RemoteControlPause:
+            case .remoteControlPause:
                 self.self.doPlay(self)
-            case .RemoteControlNextTrack:
+            case .remoteControlNextTrack:
                 self.DoFF(self)
-            case .RemoteControlPreviousTrack:
+            case .remoteControlPreviousTrack:
                 self.doRewind(self)
-            case .RemoteControlTogglePlayPause:
+            case .remoteControlTogglePlayPause:
                 self.doPlay(self)
-            case .RemoteControlEndSeekingBackward:
+            case .remoteControlEndSeekingBackward:
                 self.doRewind(self)
-            case .RemoteControlEndSeekingForward:
+            case .remoteControlEndSeekingForward:
                 self.DoFF(self)
             default:
                 print("Event not handled:\(event!.subtype.rawValue)")
@@ -53,14 +53,14 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     }
     
     func initButtons(){
-        self.playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Play, target: self, action: Selector("doPlay:"))
-        self.pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Pause, target:self, action: Selector("doPlay:"))
+        self.playButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.play, target: self, action: #selector(UtajimaListTableViewController.doPlay(_:)))
+        self.pauseButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.pause, target:self, action: #selector(UtajimaListTableViewController.doPlay(_:)))
         self.updatePlayPauseButton()
     }
     
     func updatePlayPauseButton(){
         let PlayPauseButtonOffset:Int = 2
-        if self.model.playState == .Playing {
+        if self.model.playState == .playing {
             self.controllerBar.items![PlayPauseButtonOffset] = self.pauseButton
         } else {
             self.controllerBar.items![PlayPauseButtonOffset] = self.playButton
@@ -76,56 +76,56 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
 
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         self.initButtons()
-        UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+        UIApplication.shared.beginReceivingRemoteControlEvents()
     }
     
-    override func setEditing(editing: Bool, animated: Bool) {
+    override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated:animated)
         self.tableView.setEditing(editing, animated: animated)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //TODO check if I can write this one line
         if self.tableView.indexPathForSelectedRow != nil {
-            self.tableView.deselectRowAtIndexPath(self.tableView.indexPathForSelectedRow!, animated:animated)
+            self.tableView.deselectRow(at: self.tableView.indexPathForSelectedRow!, animated:animated)
         }
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         tableView.flashScrollIndicators()
     }
     
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         tableView.flashScrollIndicators()
     }
     
-    @IBAction func play(sender: AnyObject) {
+    @IBAction func play(_ sender: AnyObject) {
     }
     
-    @IBAction func addSongsToPlaybackQueue(sender: AnyObject) {
+    @IBAction func addSongsToPlaybackQueue(_ sender: AnyObject) {
         self.runMediaPicker()
     }
     
     func runMediaPicker() {
-        let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
+        let myMediaPicker = MPMediaPickerController(mediaTypes: MPMediaType.music)
         myMediaPicker.allowsPickingMultipleItems = true
         myMediaPicker.delegate = self
-        self.presentViewController(myMediaPicker, animated: true, completion: nil)
+        self.present(myMediaPicker, animated: true, completion: nil)
     }
     
-    func mediaPicker(mediaPicker: MPMediaPickerController,
+    func mediaPicker(_ mediaPicker: MPMediaPickerController,
         didPickMediaItems mediaItemCollection: MPMediaItemCollection){
-            mediaPicker.dismissViewControllerAnimated(true, completion: nil)
+            mediaPicker.dismiss(animated: true, completion: nil)
             self.model.addSongToPlaybackQueue(mediaItemCollection)
             return
     }
     
-    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController) {
-        mediaPicker.dismissViewControllerAnimated(true, completion: nil)
+    func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
+        mediaPicker.dismiss(animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -135,27 +135,27 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
 
     // MARK: - Table view data source
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return self.model.getMusicsCount()
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) 
 
         // Configure the cell...
         //TODO fix bug
         // 5/30/2015 program chrash here when core data is corrupted...
         cell.textLabel?.text = self.model.getTitleAt(indexPath.row)
         cell.detailTextLabel?.text = self.model.getAlbumTitleAt(indexPath.row)
-        let image:UIImage? = self.model.getArtworkAt(indexPath.row)?.imageWithSize(CGSizeMake(80.0,80.0))
+        let image:UIImage? = self.model.getArtworkAt(indexPath.row)?.image(at: CGSize(width: 80.0,height: 80.0))
         cell.imageView?.image = image
         return cell
     }
@@ -166,22 +166,22 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         }
     }
         
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
     }
     
-    func respondToTap(sender: UITapGestureRecognizer) {
-        if sender.state == .Ended {
+    func respondToTap(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
             //self.model.play()
         }
     }
  
-    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+    func respondToSwipeGesture(_ gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             
             switch swipeGesture.direction {
-            case UISwipeGestureRecognizerDirection.Right:
+            case UISwipeGestureRecognizerDirection.right:
                 print("Swiped right")
-            case UISwipeGestureRecognizerDirection.Down:
+            case UISwipeGestureRecognizerDirection.down:
                 print("Swiped down")
             default:
                 break
@@ -190,7 +190,7 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     }
     
     // Override to support conditional editing of the table view.
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return NO if you do not want the specified item to be editable.
         if indexPath.row == 0 {
             return false
@@ -200,20 +200,20 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
     }
     
     //Override to support editing the table view.
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             // must update the model before update view
             self.model.removePlaybackQueueAtIndex(indexPath.row)
             // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            tableView.deleteRows(at: [indexPath], with: .fade)
 
-        } else if editingStyle == .Insert {
+        } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
 
     // Override to support conditional rearranging of the table view.
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return NO if you do not want the item to be re-orderable.
         if indexPath.row == 0 {
             return false
@@ -222,34 +222,34 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         }
     }
     
-    func tableView(tableView: UITableView,
-        targetIndexPathForMoveFromRowAtIndexPath sourceIndexPath: NSIndexPath,
-        toProposedIndexPath proposedDestinationIndexPath: NSIndexPath) -> NSIndexPath {
+    func tableView(_ tableView: UITableView,
+        targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath,
+        toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         
         if (proposedDestinationIndexPath.row < 2) {
-            return NSIndexPath(forRow: 1, inSection: proposedDestinationIndexPath.section)
+            return IndexPath(row: 1, section: proposedDestinationIndexPath.section)
         } else {
             return proposedDestinationIndexPath
         }
     }
     
-    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         self.model.movePlaybackQueue(sourceIndexPath.row,to: destinationIndexPath.row)
     }
     
-    @IBAction func doRewind(sender: AnyObject) {
+    @IBAction func doRewind(_ sender: AnyObject) {
         self.model.rewind()
     }
     
-    @IBAction func doPlay(sender: AnyObject) {
+    @IBAction func doPlay(_ sender: AnyObject) {
         switch self.model.playState {
-        case .Stopped:
+        case .stopped:
             if self.model.play() {
              self.playPauseButton = self.pauseButton
             }
-        case .Paused:
+        case .paused:
             self.model.resume()
-        case .Playing:
+        case .playing:
             self.model.pause()
         default:
             print("state error")
@@ -257,24 +257,24 @@ class UtajimaListTableViewController: UIViewController, UITableViewDataSource, U
         }
     }
     
-    @IBAction func DoFF(sender: AnyObject) {
+    @IBAction func DoFF(_ sender: AnyObject) {
         self.model.fastForward()
     }
     
-    func showUtajimaAlert(errMsg: String){
+    func showUtajimaAlert(_ errMsg: String){
         let alert:UIAlertController = UIAlertController(title:"Alert",
             message: errMsg,
-            preferredStyle: UIAlertControllerStyle.Alert
+            preferredStyle: UIAlertControllerStyle.alert
         )
         // Default 複数指定可
         let defaultAction: UIAlertAction = UIAlertAction(title: "OK",
-            style: UIAlertActionStyle.Default,
+            style: UIAlertActionStyle.default,
             handler:{
                 (action:UIAlertAction) -> Void in
                 print("OK")
         })
         alert.addAction(defaultAction)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 
 }

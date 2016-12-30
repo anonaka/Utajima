@@ -12,10 +12,10 @@ import AVFoundation
 
 class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
 
-    private var model:UtajimaModel!
-    private var avPlayer:AVAudioPlayer!
-    private var audioSession:AVAudioSession = AVAudioSession.sharedInstance()
-    private var error: NSErrorPointer = NSErrorPointer()
+    fileprivate var model:UtajimaModel!
+    fileprivate var avPlayer:AVAudioPlayer!
+    fileprivate var audioSession:AVAudioSession = AVAudioSession.sharedInstance()
+    fileprivate var error: NSErrorPointer = nil
     
     init(model:UtajimaModel){
         super.init()
@@ -24,22 +24,22 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
         
     }
     
-    private func setAudioSession(){
+    fileprivate func setAudioSession(){
         do {
             try self.audioSession.setCategory(AVAudioSessionCategoryPlayback)
         } catch let error1 as NSError {
-            self.error.memory = error1
+            self.error?.pointee = error1
         }
         do {
             try self.audioSession.setActive(true)
         } catch let error1 as NSError {
-            self.error.memory = error1
+            self.error?.pointee = error1
         }
     }
     
-    func play(song:AnyObject) -> Bool{
-        if let url:NSURL = song.valueForProperty(MPMediaItemPropertyAssetURL) as? NSURL {
-            self.avPlayer = try? AVAudioPlayer(contentsOfURL: url)
+    func play(_ song:AnyObject) -> Bool{
+        if let url:URL = song.value(forProperty: MPMediaItemPropertyAssetURL) as? URL {
+            self.avPlayer = try? AVAudioPlayer(contentsOf: url)
             self.avPlayer.delegate = self
             self.avPlayer.play()
             return true
@@ -63,7 +63,7 @@ class UtajimaPlayer: NSObject, AVAudioPlayerDelegate  {
         self.avPlayer?.play()
     }
     
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         self.model.playDone()
     }
 }

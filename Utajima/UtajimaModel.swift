@@ -11,8 +11,8 @@ import MediaPlayer
 import CoreData
 
 class UtajimaModel: UIResponder {
-    enum PlayState { case Stopped, Playing, Paused }
-    var playState:PlayState = .Stopped
+    enum PlayState { case stopped, playing, paused }
+    var playState:PlayState = .stopped
     let viewController:UtajimaListTableViewController!
     var musicCollection: [MPMediaItem] = []
     var myPlayer:UtajimaPlayer!
@@ -24,11 +24,11 @@ class UtajimaModel: UIResponder {
     let maxQueueLength = 30
 
     init(viewController: UtajimaListTableViewController){
-        self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        self.appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.managedContext = self.appDelegate.managedObjectContext!
         self.viewController = viewController
         /* Create new ManagedObject */
-        self.entity = NSEntityDescription.entityForName("SongPidList", inManagedObjectContext: self.managedContext)
+        self.entity = NSEntityDescription.entity(forEntityName: "SongPidList", in: self.managedContext)
         super.init()
         self.appDelegate.model = self
         self.myPlayer = UtajimaPlayer(model: self)
@@ -39,15 +39,15 @@ class UtajimaModel: UIResponder {
         return self.musicCollection.count
     }
     
-    func getTitleAt(index : Int) -> String? {
+    func getTitleAt(_ index : Int) -> String? {
         return self.musicCollection[index].title
     }
 
-    func getAlbumTitleAt(index : Int) -> String? {
+    func getAlbumTitleAt(_ index : Int) -> String? {
         return self.musicCollection[index].albumTitle
     }
     
-    func getArtworkAt(index : Int) -> MPMediaItemArtwork? {
+    func getArtworkAt(_ index : Int) -> MPMediaItemArtwork? {
         //TODO retuen default artwork when nil
         if let aw = self.musicCollection[index].artwork {
             return aw
@@ -56,7 +56,7 @@ class UtajimaModel: UIResponder {
         }
     }
 
-    func addSongToPlaybackQueue(mediaCollection:MPMediaItemCollection){
+    func addSongToPlaybackQueue(_ mediaCollection:MPMediaItemCollection){
         // add a selected song to the playback queue
         self.musicCollection += mediaCollection.items
         self.truncateQueue()
@@ -70,24 +70,24 @@ class UtajimaModel: UIResponder {
         }
     }
     
-    func removePlaybackQueueAtIndex(index:Int){
-        self.musicCollection.removeAtIndex(index)
+    func removePlaybackQueueAtIndex(_ index:Int){
+        self.musicCollection.remove(at: index)
     }
     
     
-    func movePlaybackQueue(from:Int,to:Int){
+    func movePlaybackQueue(_ from:Int,to:Int){
         let tmpobj:MPMediaItem = self.musicCollection[from]
-        self.musicCollection.removeAtIndex(from)
-        self.musicCollection.insert(tmpobj, atIndex: to)
+        self.musicCollection.remove(at: from)
+        self.musicCollection.insert(tmpobj, at: to)
     }
     
     func play() -> Bool {
         if self.musicCollection.isEmpty == true {
-            self.playState = .Stopped
+            self.playState = .stopped
         } else {
             let song:AnyObject = self.musicCollection[0]
             if (self.myPlayer.play(song)) {
-                self.playState = .Playing
+                self.playState = .playing
             } else {
                 //cannot play a song due to error
                 viewController.showUtajimaAlert("Cannot play Old DRM format music!")
@@ -103,17 +103,17 @@ class UtajimaModel: UIResponder {
     
     func pause(){
         self.myPlayer.pause()
-        self.playState = .Paused
+        self.playState = .paused
         self.viewController.updatePlayPauseButton()
     }
     
     func resume(){
-        if self.playState != .Paused {
+        if self.playState != .paused {
             print("State transition error")
             // must throw exception here
         } else {
             self.myPlayer!.resume()
-            self.playState = .Playing
+            self.playState = .playing
         }
         self.viewController.updatePlayPauseButton()
     }
@@ -129,7 +129,7 @@ class UtajimaModel: UIResponder {
     
     func stop(){
         self.myPlayer.stop()
-        self.playState = .Stopped
+        self.playState = .stopped
         self.viewController.updatePlayPauseButton()
     }
     
@@ -140,7 +140,7 @@ class UtajimaModel: UIResponder {
     
     func removeMusicFromCollection(){
         if !self.musicCollection.isEmpty {
-            self.musicCollection.removeAtIndex(0)
+            self.musicCollection.remove(at: 0)
         }
         self.viewController.tableView.reloadData()
     }
@@ -152,15 +152,15 @@ class UtajimaModel: UIResponder {
         // save music list to CoreData
         var pidList:[NSNumber] = []
         for song in self.musicCollection {
-            let pid = song.valueForProperty(MPMediaItemPropertyPersistentID) as! NSNumber
+            let pid = song.value(forProperty: MPMediaItemPropertyPersistentID) as! NSNumber
             pidList.append(pid)
         }
         self.writeCoreData(pidList)
     }
 
-    func writeCoreData(pidList:[NSNumber]){
+    func writeCoreData(_ pidList:[NSNumber]){
         for pid in pidList {
-            let managedObject: AnyObject = NSEntityDescription.insertNewObjectForEntityForName(self.entityName , inManagedObjectContext: self.managedContext)
+            let managedObject: AnyObject = NSEntityDescription.insertNewObject(forEntityName: self.entityName , into: self.managedContext)
             // エンティティモデルにデータをセット
             let model = managedObject as! SongPidList
             model.songPersistendId = pid
@@ -175,16 +175,16 @@ class UtajimaModel: UIResponder {
         }
     }
     
-    func fetchMusicCollection(delete: Bool = false){
+    func fetchMusicCollection(_ delete: Bool = false){
     
         /* Set search conditions */
-        let fetchRequest = NSFetchRequest(entityName: self.entityName)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: self.entityName)
         var error: NSError?
         
         /* Get result array from ManagedObjectContext */
         let fetchResults: [AnyObject]?
         do {
-            fetchResults = try self.managedContext.executeFetchRequest(fetchRequest)
+            fetchResults = try self.managedContext.fetch(fetchRequest)
         } catch let error1 as NSError {
             error = error1
             fetchResults = nil
@@ -192,9 +192,9 @@ class UtajimaModel: UIResponder {
         if let results: Array = fetchResults {
             for obj:AnyObject in results {
                 if delete == true {
-                    self.managedContext.deleteObject(obj as! NSManagedObject)
+                    self.managedContext.delete(obj as! NSManagedObject)
                 } else {
-                    let pid:NSNumber? = obj.valueForKey("songPersistendId") as? NSNumber
+                    let pid:NSNumber? = obj.value(forKey: "songPersistendId") as? NSNumber
                     if pid != nil {
                         if let item:MPMediaItem = getMediaItemFromPid(pid){
                             self.musicCollection.append(item)
@@ -207,7 +207,7 @@ class UtajimaModel: UIResponder {
         }
     }
     
-    func getMediaItemFromPid(pid:NSNumber?) -> MPMediaItem? {
+    func getMediaItemFromPid(_ pid:NSNumber?) -> MPMediaItem? {
         let pred = MPMediaPropertyPredicate(value:pid, forProperty: MPMediaItemPropertyPersistentID)
         let query = MPMediaQuery()
         query.addFilterPredicate(pred)
